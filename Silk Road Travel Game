@@ -253,6 +253,59 @@ body{background:#120b03;font-family:'Crimson Text',serif;color:var(--ink);min-he
 ::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px}
 .flame{display:inline-block;animation:flicker 1.5s ease-in-out infinite alternate}
 @keyframes flicker{0%{filter:drop-shadow(0 0 4px #ff9500)}100%{filter:drop-shadow(0 0 12px #ff6500) drop-shadow(0 0 20px #ff3300)}}
+
+/* ═══════ MINIGAME MODALS ═══════ */
+.minigame-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .3s;display:none}
+.minigame-overlay:not(.hidden){display:flex}
+.minigame-modal{background:linear-gradient(160deg,var(--parch) 0%,var(--parch-d) 100%);border:2px solid var(--gold);border-radius:16px;padding:28px 32px;max-width:500px;width:90%;box-shadow:0 12px 48px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.4);animation:modalPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalPop{from{transform:scale(.8) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.mg-title{font-family:'Cinzel',serif;font-size:24px;font-weight:900;color:var(--gold-d);text-align:center;margin-bottom:8px;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.mg-subtitle{font-family:'Cinzel',serif;font-size:13px;color:var(--stone);text-align:center;margin-bottom:20px;opacity:.8;letter-spacing:1px}
+.mg-timer{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--blood);text-align:center;margin-bottom:16px;padding:8px;background:rgba(139,26,26,.1);border-radius:8px;border:1px solid rgba(139,26,26,.2)}
+.mg-timer.warning{animation:timerPulse .5s ease-in-out infinite;color:var(--blood-l)}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* ── HAGGLING MINIGAME ── */
+.haggle-stage{text-align:center;margin-bottom:20px}
+.haggle-merchants{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.haggle-party{flex:1;text-align:center}
+.haggle-avatar{font-size:48px;margin-bottom:8px;animation:bob 2s ease-in-out infinite}
+.haggle-label{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);opacity:.7;letter-spacing:2px;text-transform:uppercase}
+.haggle-price{font-family:'Cinzel',serif;font-size:32px;font-weight:900;color:var(--ink);margin:8px 0}
+.haggle-vs{font-size:24px;color:var(--gold);opacity:.4;align-self:center}
+.haggle-controls{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.haggle-btn{flex:1;max-width:140px}
+.haggle-result{font-family:'Cinzel',serif;font-size:15px;color:var(--grn);text-align:center;padding:12px;background:rgba(45,90,39,.1);border-radius:8px;border:1px solid rgba(45,90,39,.25);margin-top:16px}
+.haggle-result.bad{color:var(--blood);background:rgba(139,26,26,.1);border-color:rgba(139,26,26,.25)}
+
+/* ── NAVIGATION MINIGAME ── */
+.nav-stage{background:linear-gradient(180deg,#0a1a2c 0%,#1a2a3c 50%,#0a1520 100%);border-radius:12px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;min-height:280px}
+.nav-stars{position:absolute;inset:0;pointer-events:none}
+.nav-star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+.nav-compass{width:180px;height:180px;margin:0 auto 20px;position:relative;border:3px solid var(--gold);border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.15),transparent 70%);box-shadow:0 0 20px rgba(201,168,76,.3)}
+.nav-needle{position:absolute;top:50%;left:50%;width:4px;height:70px;background:linear-gradient(180deg,var(--blood-l),var(--blood-d));transform-origin:50% 100%;margin-left:-2px;margin-top:-70px;border-radius:2px 2px 0 0;transition:transform .8s cubic-bezier(.34,1.56,.64,1)}
+.nav-needle::before{content:'▲';position:absolute;top:-8px;left:50%;transform:translateX(-50%);color:var(--blood-l);font-size:12px}
+.nav-center{position:absolute;top:50%;left:50%;width:16px;height:16px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--gold-d);box-shadow:0 0 8px rgba(201,168,76,.6)}
+.nav-directions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.nav-dir-btn{font-family:'Cinzel',serif;padding:12px 8px;font-size:13px;letter-spacing:1px}
+.nav-hint{font-size:14px;text-align:center;color:var(--gold);margin-bottom:12px;font-style:italic}
+
+/* ── DICE GAMBLING MINIGAME ── */
+.dice-stage{text-align:center;margin-bottom:20px}
+.dice-pot{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:16px;padding:10px;background:rgba(201,168,76,.1);border-radius:8px;border:1px solid rgba(201,168,76,.25)}
+.dice-pot-amount{font-size:24px;font-weight:900;color:var(--gold-l);display:block;margin-top:4px}
+.dice-area{display:flex;gap:16px;justify-content:center;margin:24px 0;min-height:80px;align-items:center}
+.die{width:60px;height:60px;background:#fff;border:2px solid var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.25);position:relative}
+.die.rolling{animation:diceRoll .6s ease-in-out}
+@keyframes diceRoll{0%,100%{transform:rotate(0deg)}25%{transform:rotate(180deg) scale(1.1)}50%{transform:rotate(360deg) scale(.9)}75%{transform:rotate(540deg) scale(1.05)}}
+.dice-controls{margin-bottom:16px}
+.dice-bet-input{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:16px}
+.dice-bet-label{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:1px}
+.dice-bet-amount{width:100px;font-family:'Cinzel',serif;padding:8px 12px;text-align:center;border:1px solid var(--gold-d);border-radius:6px;background:rgba(244,232,193,.1);color:var(--ink);font-size:16px;font-weight:700}
+.dice-bet-amount:focus{outline:none;border-color:var(--gold)}
+.dice-result{font-family:'Cinzel',serif;font-size:15px;padding:12px;border-radius:8px;margin-top:16px}
+.dice-result.win{color:var(--grn);background:rgba(45,90,39,.15);border:1px solid rgba(45,90,39,.3)}
+.dice-result.lose{color:var(--blood);background:rgba(139,26,26,.15);border:1px solid rgba(139,26,26,.3)}
 </style>
 </head>
 <body>
@@ -362,6 +415,86 @@ body{background:#120b03;font-family:'Crimson Text',serif;color:var(--ink);min-he
 </div>
 
 </div><!-- /app -->
+
+<!-- ═══════ MINIGAME MODALS ═══════ -->
+<!-- HAGGLING MINIGAME -->
+<div id="minigame-haggle" class="minigame-overlay hidden">
+  <div class="minigame-modal">
+    <div class="mg-title">⚖️ Haggling</div>
+    <div class="mg-subtitle">Negotiate the best price!</div>
+    <div class="mg-timer" id="haggle-timer">Time: <span id="haggle-time">15</span>s</div>
+    <div class="haggle-stage">
+      <div class="haggle-merchants">
+        <div class="haggle-party">
+          <div class="haggle-avatar">🤝</div>
+          <div class="haggle-label">Your Offer</div>
+          <div class="haggle-price" id="haggle-your-price">100</div>
+        </div>
+        <div class="haggle-vs">⚔️</div>
+        <div class="haggle-party">
+          <div class="haggle-avatar">🧔</div>
+          <div class="haggle-label">Merchant Wants</div>
+          <div class="haggle-price" id="haggle-merchant-price">150</div>
+        </div>
+      </div>
+      <div class="haggle-controls">
+        <button class="btn btn-stone haggle-btn" id="haggle-lower" onclick="haggleLower()">Offer Less ↓</button>
+        <button class="btn btn-gold haggle-btn" id="haggle-accept" onclick="haggleAccept()">Accept Deal</button>
+        <button class="btn btn-stone haggle-btn" id="haggle-higher" onclick="haggleHigher()">Offer More ↑</button>
+      </div>
+      <div id="haggle-result" class="haggle-result hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION MINIGAME -->
+<div id="minigame-nav" class="minigame-overlay hidden">
+  <div class="minigame-modal">
+    <div class="mg-title">🧭 Desert Navigation</div>
+    <div class="mg-subtitle">Find the correct direction!</div>
+    <div class="mg-timer" id="nav-timer">Time: <span id="nav-time">12</span>s</div>
+    <div class="nav-stage">
+      <div class="nav-stars" id="nav-stars"></div>
+      <div class="nav-hint" id="nav-hint">Follow the North Star...</div>
+      <div class="nav-compass">
+        <div class="nav-needle" id="nav-needle"></div>
+        <div class="nav-center"></div>
+      </div>
+    </div>
+    <div class="nav-directions">
+      <button class="btn btn-stone nav-dir-btn" onclick="navChoose('N')">⬆️ North</button>
+      <button class="btn btn-stone nav-dir-btn" onclick="navChoose('E')">➡️ East</button>
+      <button class="btn btn-stone nav-dir-btn" onclick="navChoose('S')">⬇️ South</button>
+      <button class="btn btn-stone nav-dir-btn" onclick="navChoose('W')">⬅️ West</button>
+    </div>
+    <div id="nav-result" class="haggle-result hidden"></div>
+  </div>
+</div>
+
+<!-- DICE GAMBLING MINIGAME -->
+<div id="minigame-dice" class="minigame-overlay hidden">
+  <div class="minigame-modal">
+    <div class="mg-title">🎲 Dice Game</div>
+    <div class="mg-subtitle">Roll higher than the house!</div>
+    <div class="dice-pot">
+      POT<span class="dice-pot-amount" id="dice-pot-amount">0 ⚱️</span>
+    </div>
+    <div class="dice-area" id="dice-area">
+      <div class="die" id="die1">?</div>
+      <div class="die" id="die2">?</div>
+    </div>
+    <div class="dice-bet-input">
+      <span class="dice-bet-label">Your Bet:</span>
+      <input type="number" class="dice-bet-amount" id="dice-bet" min="5" max="50" value="15" step="5">
+      <span class="dice-bet-label">denarii</span>
+    </div>
+    <div class="dice-controls">
+      <button class="btn btn-gold" id="dice-roll-btn" onclick="diceRoll()" style="width:100%">🎲 Roll the Dice!</button>
+    </div>
+    <div id="dice-result" class="dice-result hidden"></div>
+  </div>
+</div>
+
 <script>
 // ═══════ STARS ═══════
 (()=>{
@@ -839,6 +972,28 @@ const EVS=[
    ch:[{t:'Book the sea passage — it\'s much faster.',c:'💰 −40 denarii',b:['navigator','trader'],o:'c10sea'},
        {t:'Go by land through Greece — safer but longer.',c:'🌾 −20 provisions',b:['navigator'],o:'c10land'},
        {t:'Split the caravan — send cargo by sea, travel by land.',c:'💰 −20 denarii, 🌾 −10',b:['trader'],o:'c10split'}]},
+
+  // ── MINIGAME EVENTS (3 new) ──
+  {id:'mg1',type:'market',icon:'💰',tag:'tag-market',title:'The Master Haggler',
+   text:'A renowned merchant challenges you to a haggling contest over a rare shipment of Eastern spices. Can you negotiate a favorable price?',
+   skillBonus:{trader:'Your trader knows every trick in the book.'},
+   minigame:'haggle',
+   ch:[{t:'Accept the haggling challenge!',c:'🎮 Test your skills',b:['trader'],o:'mg1_haggle'},
+       {t:'Pay the asking price and move on.',c:'💰 −30 denarii',b:[],o:'mg1_skip'}]},
+
+  {id:'mg2',type:'weather',icon:'🌫️',tag:'tag-weather',title:'Disoriented in the Sandstorm',
+   text:'A sudden sandstorm has completely obscured the sky. Your caravan must navigate by the stars to find the correct path.',
+   skillBonus:{navigator:'Your navigator can read the stars even in poor visibility.',scout:'Your scout has memorized the terrain.'},
+   minigame:'navigation',
+   ch:[{t:'Navigate by the stars.',c:'🧭 Test your navigation',b:['navigator'],o:'mg2_nav'},
+       {t:'Wait for the storm to pass.',c:'🌾 −15 provisions',b:[],o:'mg2_wait'}]},
+
+  {id:'mg3',type:'cultural',icon:'🎲',tag:'tag-cultural',title:'Caravanserai Dice Challenge',
+   text:'At the caravanserai, a local merchant challenges you to a single roll of the dice. Custom dictates you must accept or risk offense.',
+   skillBonus:{diplomat:'Your diplomat can read the challenger and gauge the risk.',trader:'Your trader understands probability and knows what to wager.'},
+   minigame:'dice',
+   ch:[{t:'Accept the dice challenge.',c:'🎲 Roll the dice',b:['diplomat','trader'],o:'mg3_dice'},
+       {t:'Politely decline and offer a gift instead.',c:'💰 −10 denarii',b:['diplomat'],o:'mg3_skip'}]},
 ];
 
 // ═══════ OUTCOMES ═══════
@@ -1064,6 +1219,14 @@ const OTS={
   c10sea:{txt:'The sea passage was quick and the captain was skilled. You arrived at Ostia in two weeks.',efx:[{l:'Navigator+Trader bonus!',g:1},{l:'−40 denarii, saved 2 weeks',g:1}],fn:G=>{G.g=Math.max(0,G.g-40);G.c+=10}},
   c10land:{txt:'The road through Greece was beautiful and safe. You arrived in Rome with your cargo perfectly intact.',efx:[{l:'Navigator bonus!',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
   c10split:{txt:'The split was sensible. The sea cargo arrived first; your party followed by land. All reunited at Ostia.',efx:[{l:'Combined approach',g:1},{l:'−20 denarii, −10 provisions',g:0}],fn:G=>{G.g=Math.max(0,G.g-20);G.f=Math.max(0,G.f-10);G.c+=5}},
+  
+  // ── MINIGAME OUTCOMES ──
+  mg1_haggle:{txt:'',efx:[],fn:G=>{},minigame:true}, // Handled by minigame
+  mg1_skip:{txt:'You paid the merchant\'s asking price without haggling. Quick, but not the best deal.',efx:[{l:'Transaction complete',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  mg2_nav:{txt:'',efx:[],fn:G=>{},minigame:true}, // Handled by minigame
+  mg2_wait:{txt:'You waited for the storm to pass. Three days of rations consumed, but you stayed on course.',efx:[{l:'Storm passed',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  mg3_dice:{txt:'',efx:[],fn:G=>{},minigame:true}, // Handled by minigame
+  mg3_skip:{txt:'You politely declined the challenge and offered a small gift to avoid offense. The merchant accepted graciously.',efx:[{l:'Honor maintained',g:1},{l:'−10 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-10)}},
 };
 
 // ═══════ CHAR SETUP ═══════
@@ -1453,6 +1616,52 @@ function resolve(ev,ch,ci){
   const out=OTS[oKey]||OTS[ch.o];
   if(!out){console.warn('Missing outcome:',oKey,'falling back to base');return}
 
+  // ── CHECK FOR MINIGAME ──
+  if(out.minigame){
+    hide('choices-sec');
+    
+    // Determine which minigame to launch
+    if(oKey==='mg1_haggle'){
+      // Haggling minigame
+      startHaggling('Eastern Spices',50,function(result){
+        const finalPrice=result.price;
+        S.g=Math.max(0,S.g-finalPrice);
+        if(result.success){
+          S.c+=15; // Got the spices
+          showMinigameOutcome(ev,ci,hasBenefit,`You successfully haggled for ${finalPrice} denarii and secured excellent spices!`,[{l:`Spices acquired for ${finalPrice} denarii`,g:1},{l:'+15 cargo',g:1}],true);
+        }else{
+          showMinigameOutcome(ev,ci,hasBenefit,`The merchant charged full price: ${finalPrice} denarii. No spices acquired.`,[{l:`Paid ${finalPrice} denarii`,g:0},{l:'No goods',g:0}],false);
+        }
+        updateHUD();
+      });
+    } else if(oKey==='mg2_nav'){
+      // Navigation minigame
+      startNavigation(function(result){
+        if(result.success){
+          showMinigameOutcome(ev,ci,hasBenefit,'Your navigation was perfect! You found the shortest path through the storm.',[{l:'Perfect navigation!',g:1},{l:'No losses',g:1}],true);
+        }else{
+          S.f=Math.max(0,S.f-20);
+          showMinigameOutcome(ev,ci,hasBenefit,'You got disoriented and wandered for days before finding your way.',[{l:'Lost in the storm',g:0},{l:'−20 provisions',g:0}],false);
+        }
+        updateHUD();
+      });
+    } else if(oKey==='mg3_dice'){
+      // Dice gambling minigame - required single round
+      startDiceGambling(function(result){
+        if(result.success && result.won>0){
+          showMinigameOutcome(ev,ci,hasBenefit,`You won ${result.won} denarii at the dice table! (Rolled ${result.total} vs house ${result.house})`,[{l:`Won ${result.won} denarii!`,g:1},{l:'Lucky roll',g:1}],true);
+        } else if(result.success && result.won===0){
+          showMinigameOutcome(ev,ci,hasBenefit,`The dice game was a tie. Your bet was returned. (Both rolled ${result.total})`,[{l:'Tie - bet returned',g:1}],true);
+        } else {
+          showMinigameOutcome(ev,ci,hasBenefit,`You lost ${-result.won} denarii at the dice table. (Rolled ${result.total} vs house ${result.house})`,[{l:`Lost ${-result.won} denarii`,g:0},{l:'Unlucky roll',g:0}],false);
+        }
+        updateHUD();
+      });
+    }
+    return; // Exit - minigame will call showMinigameOutcome
+  }
+
+  // ── NORMAL OUTCOME (no minigame) ──
   out.fn(S);
   S.evDone++;
   S.day+=Math.floor(Math.random()*3)+2;
@@ -1476,6 +1685,32 @@ function resolve(ev,ch,ci){
   else if(isGood){['sb-g','sb-c'].forEach(id=>{const e=$(id);if(e){e.classList.add('pulse-good');setTimeout(()=>e.classList.remove('pulse-good'),700)}})}
 
   addLog(`Day ${S.day}: ${ev.title} → Choice ${['I','II','III'][ci]}`+(hasBenefit?' ✦':''),false);
+  if(checkDeath())return;
+  show('cont-sec');
+}
+
+// Helper to show outcome after minigame completes
+function showMinigameOutcome(ev,ci,hasBenefit,text,effects,isGood){
+  S.evDone++;
+  S.day+=Math.floor(Math.random()*3)+2;
+  updateHUD();
+
+  $('outcome-sec').style.display='block';
+  const card=$('out-card');
+  const isBad=effects.some(e=>!e.g);
+  card.className='panel '+(isBad?'out-bad':isGood?'out-good':'out-neutral');
+  setT('out-text',text);
+
+  const efDiv=$('out-efx');efDiv.innerHTML='';
+  effects.forEach(ef=>{
+    const s=document.createElement('span');
+    s.className='eff '+(ef.g?'eff-good':'eff-bad');s.textContent=ef.l;efDiv.appendChild(s);
+  });
+
+  if(isBad){['sb-m','sb-f','sb-g','sb-c'].forEach(id=>{const e=$(id);if(e){e.classList.add('pulse-bad');setTimeout(()=>e.classList.remove('pulse-bad'),700)}})}
+  else if(isGood){['sb-g','sb-c'].forEach(id=>{const e=$(id);if(e){e.classList.add('pulse-good');setTimeout(()=>e.classList.remove('pulse-good'),700)}})}
+
+  addLog(`Day ${S.day}: ${ev.title} → Minigame`+(hasBenefit?' ✦':''),false);
   if(checkDeath())return;
   show('cont-sec');
 }
@@ -1597,6 +1832,365 @@ function toggleLog(){
   if(b.style.display==='block'){b.style.display='none';a.textContent='▼'}
   else{b.style.display='block';a.textContent='▲'}
 }
+
+// ═══════════════════════════════════════════════════════════
+// ═══════ MINIGAMES ═══════
+// ═══════════════════════════════════════════════════════════
+
+// ── MINIGAME STATE ──
+let MG={
+  active:null,
+  callback:null,
+  haggle:{yourPrice:0,merchantPrice:0,target:0,timeLeft:0,timer:null},
+  nav:{correct:'',timeLeft:0,timer:null},
+  dice:{bet:10,maxBet:50,rounds:0}
+};
+
+// ═══════ HAGGLING MINIGAME ═══════
+function startHaggling(itemName,basePrice,callback){
+  MG.active='haggle';
+  MG.callback=callback;
+  
+  // Setup prices
+  const traderBonus=partyHasSkill('trader')?1:0;
+  const targetPrice=Math.floor(basePrice*0.85); // Aim for 15% discount
+  const merchantStart=basePrice;
+  const yourStart=Math.floor(basePrice*0.6); // Start low
+  
+  MG.haggle.yourPrice=yourStart;
+  MG.haggle.merchantPrice=merchantStart;
+  MG.haggle.target=targetPrice;
+  MG.haggle.timeLeft=traderBonus?20:15; // Trader gets more time
+  
+  // Update UI
+  $('haggle-your-price').textContent=yourStart;
+  $('haggle-merchant-price').textContent=merchantStart;
+  $('haggle-result').classList.add('hidden');
+  $('haggle-accept').disabled=false;
+  $('haggle-lower').disabled=false;
+  $('haggle-higher').disabled=false;
+  
+  // Show modal
+  $('minigame-haggle').classList.remove('hidden');
+  
+  // Start timer
+  haggleTick();
+}
+
+function haggleTick(){
+  if(MG.active!=='haggle')return;
+  
+  const timeEl=$('haggle-time');
+  const timerEl=$('haggle-timer');
+  
+  timeEl.textContent=MG.haggle.timeLeft;
+  
+  if(MG.haggle.timeLeft<=5){
+    timerEl.classList.add('warning');
+  }
+  
+  if(MG.haggle.timeLeft<=0){
+    haggleTimeout();
+    return;
+  }
+  
+  MG.haggle.timeLeft--;
+  MG.haggle.timer=setTimeout(haggleTick,1000);
+}
+
+function haggleLower(){
+  const step=Math.floor(MG.haggle.merchantPrice*0.08);
+  MG.haggle.yourPrice=Math.max(Math.floor(MG.haggle.merchantPrice*0.5),MG.haggle.yourPrice-step);
+  $('haggle-your-price').textContent=MG.haggle.yourPrice;
+  
+  // Merchant counters - moves toward player
+  const merchantStep=Math.floor(MG.haggle.merchantPrice*0.06);
+  MG.haggle.merchantPrice=Math.max(MG.haggle.target,MG.haggle.merchantPrice-merchantStep);
+  $('haggle-merchant-price').textContent=MG.haggle.merchantPrice;
+}
+
+function haggleHigher(){
+  const step=Math.floor(MG.haggle.merchantPrice*0.08);
+  MG.haggle.yourPrice=Math.min(MG.haggle.merchantPrice,MG.haggle.yourPrice+step);
+  $('haggle-your-price').textContent=MG.haggle.yourPrice;
+  
+  // Merchant is pleased but still budges a bit
+  const merchantStep=Math.floor(MG.haggle.merchantPrice*0.04);
+  MG.haggle.merchantPrice=Math.max(MG.haggle.target,MG.haggle.merchantPrice-merchantStep);
+  $('haggle-merchant-price').textContent=MG.haggle.merchantPrice;
+}
+
+function haggleAccept(){
+  clearTimeout(MG.haggle.timer);
+  $('haggle-timer').classList.remove('warning');
+  
+  const diff=Math.abs(MG.haggle.yourPrice-MG.haggle.merchantPrice);
+  const resultEl=$('haggle-result');
+  
+  // Disable buttons
+  $('haggle-accept').disabled=true;
+  $('haggle-lower').disabled=true;
+  $('haggle-higher').disabled=true;
+  
+  let result;
+  if(diff<=3){
+    // Perfect deal!
+    result={success:true,price:Math.floor((MG.haggle.yourPrice+MG.haggle.merchantPrice)/2),msg:'🎉 Deal struck! The merchant is satisfied.'};
+    resultEl.textContent=result.msg;
+    resultEl.classList.remove('bad','hidden');
+  } else if(MG.haggle.yourPrice<MG.haggle.merchantPrice-10){
+    // Too cheap - merchant refuses
+    result={success:false,price:MG.haggle.merchantPrice,msg:'❌ The merchant scoffs at your lowball offer and walks away.'};
+    resultEl.textContent=result.msg;
+    resultEl.classList.add('bad');
+    resultEl.classList.remove('hidden');
+  } else {
+    // Acceptable deal
+    result={success:true,price:Math.floor((MG.haggle.yourPrice+MG.haggle.merchantPrice)/2),msg:`✓ The merchant accepts. Final price: ${Math.floor((MG.haggle.yourPrice+MG.haggle.merchantPrice)/2)} denarii.`};
+    resultEl.textContent=result.msg;
+    resultEl.classList.remove('bad','hidden');
+  }
+  
+  setTimeout(()=>{
+    $('minigame-haggle').classList.add('hidden');
+    MG.active=null;
+    if(MG.callback)MG.callback(result);
+  },2000);
+}
+
+function haggleTimeout(){
+  clearTimeout(MG.haggle.timer);
+  $('haggle-timer').classList.remove('warning');
+  $('haggle-accept').disabled=true;
+  $('haggle-lower').disabled=true;
+  $('haggle-higher').disabled=true;
+  
+  const resultEl=$('haggle-result');
+  resultEl.textContent='⏱️ Time ran out! The merchant charges full price.';
+  resultEl.classList.add('bad');
+  resultEl.classList.remove('hidden');
+  
+  setTimeout(()=>{
+    $('minigame-haggle').classList.add('hidden');
+    MG.active=null;
+    if(MG.callback)MG.callback({success:false,price:MG.haggle.merchantPrice,msg:'Timeout'});
+  },2000);
+}
+
+// ═══════ NAVIGATION MINIGAME ═══════
+function startNavigation(callback){
+  MG.active='nav';
+  MG.callback=callback;
+  
+  // Pick random correct direction
+  const dirs=['N','E','S','W'];
+  const hints={
+    N:'Follow the North Star...',
+    E:'The sun rises in the East...',
+    S:'Head toward the warmth...',
+    W:'Toward the setting sun...'
+  };
+  const rotations={N:0,E:90,S:180,W:270};
+  
+  MG.nav.correct=dirs[Math.floor(Math.random()*dirs.length)];
+  
+  // Navigator skill gives extra time and shows hint
+  const navBonus=partyHasSkill('navigator')?1:0;
+  MG.nav.timeLeft=navBonus?18:12;
+  
+  // Update UI
+  $('nav-hint').textContent=hints[MG.nav.correct];
+  $('nav-result').classList.add('hidden');
+  
+  // Spin needle randomly
+  const needle=$('nav-needle');
+  needle.style.transform=`rotate(${Math.random()*360}deg)`;
+  
+  // Generate stars
+  const starsContainer=$('nav-stars');
+  starsContainer.innerHTML='';
+  for(let i=0;i<40;i++){
+    const star=document.createElement('div');
+    star.className='nav-star';
+    star.style.left=Math.random()*100+'%';
+    star.style.top=Math.random()*100+'%';
+    star.style.animationDelay=Math.random()*3+'s';
+    starsContainer.appendChild(star);
+  }
+  
+  // Show modal
+  $('minigame-nav').classList.remove('hidden');
+  
+  // Start timer
+  navTick();
+}
+
+function navTick(){
+  if(MG.active!=='nav')return;
+  
+  const timeEl=$('nav-time');
+  const timerEl=$('nav-timer');
+  
+  timeEl.textContent=MG.nav.timeLeft;
+  
+  if(MG.nav.timeLeft<=4){
+    timerEl.classList.add('warning');
+  }
+  
+  if(MG.nav.timeLeft<=0){
+    navTimeout();
+    return;
+  }
+  
+  MG.nav.timeLeft--;
+  MG.nav.timer=setTimeout(navTick,1000);
+}
+
+function navChoose(direction){
+  clearTimeout(MG.nav.timer);
+  $('nav-timer').classList.remove('warning');
+  
+  const rotations={N:0,E:90,S:180,W:270};
+  const needle=$('nav-needle');
+  needle.style.transform=`rotate(${rotations[direction]}deg)`;
+  
+  const resultEl=$('nav-result');
+  let result;
+  
+  if(direction===MG.nav.correct){
+    result={success:true,msg:'🧭 Perfect! You found the correct direction.'};
+    resultEl.textContent=result.msg;
+    resultEl.classList.remove('bad','hidden');
+  } else {
+    result={success:false,msg:'❌ Wrong direction! You got lost in the desert.'};
+    resultEl.textContent=result.msg;
+    resultEl.classList.add('bad');
+    resultEl.classList.remove('hidden');
+  }
+  
+  setTimeout(()=>{
+    $('minigame-nav').classList.add('hidden');
+    MG.active=null;
+    if(MG.callback)MG.callback(result);
+  },2000);
+}
+
+function navTimeout(){
+  clearTimeout(MG.nav.timer);
+  $('nav-timer').classList.remove('warning');
+  
+  const resultEl=$('nav-result');
+  resultEl.textContent='⏱️ Time ran out! You wandered aimlessly.';
+  resultEl.classList.add('bad');
+  resultEl.classList.remove('hidden');
+  
+  setTimeout(()=>{
+    $('minigame-nav').classList.add('hidden');
+    MG.active=null;
+    if(MG.callback)MG.callback({success:false,msg:'Timeout'});
+  },2500);
+}
+
+// ═══════ DICE GAMBLING MINIGAME ═══════
+function startDiceGambling(callback){
+  MG.active='dice';
+  MG.callback=callback;
+  MG.dice.rounds=0;
+  
+  // Set max bet based on current denarii
+  MG.dice.maxBet=Math.min(50,Math.floor(S.g/2));
+  const defaultBet=Math.min(15,MG.dice.maxBet);
+  $('dice-bet').max=MG.dice.maxBet;
+  $('dice-bet').value=defaultBet;
+  
+  $('dice-pot-amount').textContent='0 ⚱️';
+  $('die1').textContent='?';
+  $('die2').textContent='?';
+  $('dice-result').classList.add('hidden');
+  $('dice-roll-btn').disabled=false;
+  
+  // Show modal
+  $('minigame-dice').classList.remove('hidden');
+}
+
+function diceRoll(){
+  const betInput=$('dice-bet');
+  const bet=Math.min(parseInt(betInput.value)||15,MG.dice.maxBet);
+  
+  if(bet>S.g){
+    alert('You don\'t have enough denarii!');
+    return;
+  }
+  
+  // Deduct bet
+  S.g-=bet;
+  updateHUD();
+  
+  // Disable roll button
+  $('dice-roll-btn').disabled=true;
+  
+  // Animate dice
+  const die1El=$('die1');
+  const die2El=$('die2');
+  die1El.classList.add('rolling');
+  die2El.classList.add('rolling');
+  
+  setTimeout(()=>{
+    // Roll dice
+    const playerDie1=Math.floor(Math.random()*6)+1;
+    const playerDie2=Math.floor(Math.random()*6)+1;
+    const playerTotal=playerDie1+playerDie2;
+    
+    const houseDie1=Math.floor(Math.random()*6)+1;
+    const houseDie2=Math.floor(Math.random()*6)+1;
+    const houseTotal=houseDie1+houseDie2;
+    
+    die1El.textContent=playerDie1;
+    die2El.textContent=playerDie2;
+    die1El.classList.remove('rolling');
+    die2El.classList.remove('rolling');
+    
+    const resultEl=$('dice-result');
+    let gameResult;
+    
+    // Determine winner
+    if(playerTotal>houseTotal){
+      // Win!
+      const winnings=bet*2;
+      S.g+=winnings;
+      updateHUD();
+      
+      resultEl.textContent=`🎉 You rolled ${playerTotal}, house rolled ${houseTotal}. You win ${winnings} denarii!`;
+      resultEl.className='dice-result win';
+      resultEl.classList.remove('hidden');
+      gameResult={success:true,won:winnings-bet,total:playerTotal,house:houseTotal};
+    } else if(playerTotal===houseTotal){
+      // Tie - return bet
+      S.g+=bet;
+      updateHUD();
+      
+      resultEl.textContent=`⚖️ Tie! Both rolled ${playerTotal}. Bet returned.`;
+      resultEl.className='dice-result';
+      resultEl.classList.remove('hidden');
+      gameResult={success:true,won:0,total:playerTotal,house:houseTotal};
+    } else {
+      // Lose
+      resultEl.textContent=`😞 You rolled ${playerTotal}, house rolled ${houseTotal}. You lose ${bet} denarii.`;
+      resultEl.className='dice-result lose';
+      resultEl.classList.remove('hidden');
+      gameResult={success:false,won:-bet,total:playerTotal,house:houseTotal};
+    }
+    
+    // Auto-close after 2.5 seconds and continue game
+    setTimeout(()=>{
+      $('minigame-dice').classList.add('hidden');
+      MG.active=null;
+      if(MG.callback)MG.callback(gameResult);
+    },2500);
+    
+  },600);
+}
+
 </script>
 </body>
 </html>
