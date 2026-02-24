@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Via Sericae — The Silk Road</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --gold:#c9a84c; --gold-l:#e8c97a; --gold-d:#8b6914;
+  --parch:#f4e8c1; --parch-d:#e0cc94;
+  --ink:#2c1810;
+  --blood:#8b1a1a; --blood-l:#c0392b;
+  --stone:#5c4a32; --stone-l:#8b7355;
+  --sky:#2c5364; --sky-l:#4a8fa8;
+  --grn:#2d5a27; --grn-l:#4a8c42;
+  --purple:#6b2fa0; --purple-l:#9b59d0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#120b03;font-family:'Crimson Text',serif;color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ── STARS ── */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur,3s) var(--del,0s) infinite}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* ── ANIMATED BACKGROUNDS ── */
+#bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+
+/* Desert dunes */
+.dune{position:absolute;bottom:0;border-radius:50% 50% 0 0;opacity:.18}
+.dune1{width:140%;height:160px;background:linear-gradient(180deg,#c9a84c,#8b6914);left:-20%;animation:duneDrift 18s ease-in-out infinite alternate}
+.dune2{width:120%;height:110px;background:linear-gradient(180deg,#e8c97a,#c9a84c);left:-10%;animation:duneDrift 25s ease-in-out infinite alternate-reverse}
+.dune3{width:100%;height:70px;background:linear-gradient(180deg,#f4e8c1,#e8c97a);left:0;animation:duneDrift 12s ease-in-out infinite alternate}
+@keyframes duneDrift{0%{transform:translateX(0)}100%{transform:translateX(3%)}}
+
+/* ── APP ── */
+#app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:20px 16px 80px}
+.screen{animation:screenIn .5s cubic-bezier(.22,1,.36,1)}
+@keyframes screenIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TITLE ── */
+#screen-title{text-align:center;padding:36px 20px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.emblem{width:120px;height:120px;background:conic-gradient(from 0deg,#8b6914,#e8c97a,#c9a84c,#8b6914);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:58px;border:3px solid var(--gold-l);box-shadow:0 0 50px rgba(201,168,76,.6),inset 0 0 30px rgba(0,0,0,.3);animation:spinGlow 8s linear infinite}
+@keyframes spinGlow{0%{filter:drop-shadow(0 0 8px rgba(201,168,76,.4))}50%{filter:drop-shadow(0 0 22px rgba(201,168,76,.9))}100%{filter:drop-shadow(0 0 8px rgba(201,168,76,.4))}}
+.t-latin{font-family:'Cinzel',serif;color:var(--gold-l);font-size:12px;letter-spacing:6px;opacity:.8}
+.t-main{font-family:'Cinzel',serif;color:var(--gold);font-size:clamp(34px,7vw,58px);font-weight:900;line-height:1;text-shadow:0 0 40px rgba(201,168,76,.7),0 2px 0 rgba(0,0,0,.5)}
+.t-sub{font-family:'Cinzel',serif;color:var(--gold-l);font-size:clamp(13px,3vw,19px);letter-spacing:4px;opacity:.85}
+.t-route{font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:2px;opacity:.6;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);padding:6px 16px;border-radius:20px}
+.t-desc{background:rgba(244,232,193,.06);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:18px 24px;color:var(--parch);font-size:16px;line-height:1.75;max-width:580px;font-style:italic}
+.divider{color:var(--gold);font-size:20px;opacity:.5;letter-spacing:14px}
+
+/* ── SETUP ── */
+#screen-setup{padding:20px}
+.setup-title{font-family:'Cinzel',serif;color:var(--gold);font-size:22px;font-weight:700;text-align:center;margin-bottom:6px}
+.setup-sub{text-align:center;color:rgba(244,232,193,.6);font-size:14px;margin-bottom:24px;font-style:italic}
+.chars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:24px}
+.char-card{background:rgba(30,18,8,.8);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:18px;transition:border-color .2s}
+.char-card:hover{border-color:rgba(201,168,76,.5)}
+.char-card-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.char-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(201,168,76,.4);background:rgba(201,168,76,.1)}
+.char-name-inp{background:rgba(244,232,193,.06);border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:8px 12px;color:var(--parch);font-family:'Cinzel',serif;font-size:14px;width:100%;outline:none;letter-spacing:1px}
+.char-name-inp:focus{border-color:var(--gold)}
+.char-name-inp::placeholder{opacity:.35}
+.skill-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:8px}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.skill-opt{display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgba(201,168,76,.15);background:rgba(244,232,193,.03);transition:all .2s;position:relative}
+.skill-opt:hover{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.4)}
+.skill-opt.active{background:rgba(201,168,76,.15);border-color:var(--gold)}
+.skill-opt input{position:absolute;opacity:0;pointer-events:none}
+.skill-icon{font-size:15px}
+.skill-name{font-family:'Cinzel',serif;font-size:9px;color:var(--parch);letter-spacing:.5px}
+.skill-desc-s{font-size:10px;color:rgba(244,232,193,.4);margin-top:1px}
+.skill-limit{font-size:11px;color:rgba(201,168,76,.5);text-align:center;margin-top:6px;font-style:italic}
+
+/* ── BUTTONS ── */
+.btn{font-family:'Cinzel',serif;cursor:pointer;border:none;border-radius:7px;padding:13px 28px;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:all .2s;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.1),transparent);pointer-events:none}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn-gold{background:linear-gradient(135deg,#e8c97a 0%,#c9a84c 50%,#8b6914 100%);color:#1a0f05;box-shadow:0 4px 20px rgba(201,168,76,.45),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-gold:hover{box-shadow:0 6px 28px rgba(201,168,76,.7)}
+.btn-stone{background:linear-gradient(135deg,var(--stone-l),var(--stone));color:var(--parch);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.btn-blood{background:linear-gradient(135deg,var(--blood-l),var(--blood));color:var(--parch);box-shadow:0 4px 12px rgba(139,26,26,.5)}
+
+/* ── PANELS ── */
+.panel{background:linear-gradient(160deg,var(--parch) 0%,var(--parch-d) 100%);border-radius:12px;padding:22px 26px;box-shadow:0 8px 36px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.45);border:1px solid var(--gold-d)}
+.panel-dark{background:rgba(22,12,4,.88);border:1px solid rgba(201,168,76,.22);border-radius:12px;padding:20px 24px;backdrop-filter:blur(6px)}
+
+/* ── HUD ── */
+#hud{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:580px){#hud{grid-template-columns:repeat(4,1fr)}}
+.stat-box{background:rgba(22,12,4,.88);border:1px solid rgba(201,168,76,.28);border-radius:10px;padding:10px 12px;text-align:center;transition:border-color .3s}
+.stat-box.pulse-bad{animation:pulseBad .6s}
+.stat-box.pulse-good{animation:pulseGood .6s}
+@keyframes pulseBad{0%,100%{border-color:rgba(201,168,76,.28)}50%{border-color:#c0392b;box-shadow:0 0 12px rgba(192,57,43,.5)}}
+@keyframes pulseGood{0%,100%{border-color:rgba(201,168,76,.28)}50%{border-color:#4a8c42;box-shadow:0 0 12px rgba(74,140,66,.5)}}
+.s-icon{font-size:15px;margin-bottom:2px}
+.s-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.75}
+.s-value{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--parch);line-height:1.2}
+.s-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:4px;overflow:hidden}
+.s-bar-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* ── WAYPOINT TRACK ── */
+.prog-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.65;margin-bottom:7px}
+.prog-track{background:rgba(22,12,4,.88);border:1px solid rgba(201,168,76,.22);border-radius:22px;padding:10px 16px;display:flex;align-items:center;gap:4px;overflow-x:auto;margin-bottom:16px;scrollbar-width:thin}
+.wp{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+.wp-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid rgba(201,168,76,.25);background:rgba(22,12,4,.7);transition:all .4s}
+.wp-dot.done{background:var(--gold-d);border-color:var(--gold);filter:drop-shadow(0 0 4px rgba(201,168,76,.4))}
+.wp-dot.cur{background:linear-gradient(135deg,var(--gold-l),var(--gold));border-color:var(--gold-l);box-shadow:0 0 16px rgba(201,168,76,.7);animation:wpPulse 2s ease-in-out infinite}
+@keyframes wpPulse{0%,100%{box-shadow:0 0 10px rgba(201,168,76,.5)}50%{box-shadow:0 0 22px rgba(201,168,76,.9)}}
+.wp-name{font-family:'Cinzel',serif;font-size:7px;color:var(--gold);opacity:.65;letter-spacing:.5px;white-space:nowrap;max-width:48px;text-align:center}
+.wp-line{flex:1;height:2px;background:rgba(201,168,76,.15);min-width:10px;transition:background .4s}
+.wp-line.done{background:var(--gold-d)}
+
+/* ═══ ANIMATION STAGE (enhanced) ═══ */
+#anim-stage{height:130px;margin-bottom:14px;border-radius:14px;overflow:hidden;position:relative;border:1px solid rgba(201,168,76,.2)}
+.stage-bg{position:absolute;inset:0;transition:background 0.6s ease}
+.stage-overlay{position:absolute;inset:0;pointer-events:none}
+.stage-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;pointer-events:none}
+
+/* Animated scene elements */
+.scene-el{position:absolute;z-index:2;pointer-events:none}
+
+/* Mountains scene */
+.mountain{position:absolute;bottom:0;width:0;height:0;border-style:solid}
+
+/* City silhouette */
+.city-block{position:absolute;bottom:0;background:rgba(0,0,0,.4)}
+
+/* Sun/Moon */
+.stage-sun{position:absolute;border-radius:50%;animation:sunGlow 3s ease-in-out infinite}
+@keyframes sunGlow{0%,100%{filter:drop-shadow(0 0 8px currentColor)}50%{filter:drop-shadow(0 0 20px currentColor)}}
+
+/* Caravan marcher */
+.marcher{position:absolute;font-size:22px;animation:march 4s linear infinite}
+@keyframes march{0%{left:-5%;transform:scaleX(1)}50%{left:50%}100%{left:105%;transform:scaleX(1)}}
+
+/* Lightning */
+.lightning{position:absolute;color:#fff;font-size:40px;animation:bolt 2.5s ease-in-out infinite;opacity:0}
+@keyframes bolt{0%,100%{opacity:0}10%,12%{opacity:1}11%,13%{opacity:0}20%,22%{opacity:.8}21%,23%{opacity:0}}
+
+/* Spinning merchant */
+.spin-mer{animation:spinIn 1s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes spinIn{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+
+.stage-icon-big{font-size:62px;position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);z-index:4;animation:stagePop .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes stagePop{from{transform:translate(-50%,-40%) scale(0) rotate(-20deg);opacity:0}to{transform:translate(-50%,-60%) scale(1) rotate(0);opacity:1}}
+.stage-label{position:absolute;bottom:10px;right:14px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(244,232,193,.6);z-index:5}
+.stage-day{position:absolute;top:10px;left:14px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;color:rgba(244,232,193,.5);z-index:5}
+
+/* region badge */
+.region-badge{position:absolute;top:10px;right:14px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.7);background:rgba(0,0,0,.4);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:2px 8px;z-index:5}
+
+/* ── NARRATIVE ── */
+#narrative-card{margin-bottom:14px}
+.ev-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.ev-title-wrap{flex:1}
+.ev-tag{font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:5px}
+.tag-battle{background:rgba(139,26,26,.2);color:#e57373;border:1px solid rgba(139,26,26,.35)}
+.tag-disease{background:rgba(120,70,20,.2);color:#c4956a;border:1px solid rgba(120,70,20,.35)}
+.tag-weather{background:rgba(44,83,100,.25);color:#7ab8d4;border:1px solid rgba(44,83,100,.4)}
+.tag-political{background:rgba(107,47,160,.2);color:#c07cc0;border:1px solid rgba(107,47,160,.35)}
+.tag-travel{background:rgba(45,90,39,.2);color:#80c878;border:1px solid rgba(45,90,39,.35)}
+.tag-market{background:rgba(201,168,76,.15);color:var(--gold-l);border:1px solid rgba(201,168,76,.3)}
+.tag-cultural{background:rgba(50,80,120,.2);color:#7ab0e0;border:1px solid rgba(50,80,120,.35)}
+.ev-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.2}
+.ev-text{font-size:16px;line-height:1.8;color:#2c1810;font-style:italic}
+.skill-bonus{display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:4px 10px;font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-top:8px;letter-spacing:.5px}
+
+/* ── CHOICES ── */
+.ch-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.65;margin-bottom:8px}
+.ch-btn{width:100%;text-align:left;padding:13px 16px;background:rgba(244,232,193,.05);border:1px solid rgba(201,168,76,.18);border-radius:9px;color:var(--parch);font-family:'Crimson Text',serif;font-size:15px;line-height:1.5;cursor:pointer;margin-bottom:8px;transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+.ch-btn:hover{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.45);transform:translateX(5px)}
+.ch-btn.boosted{border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)}
+.ch-btn.boosted .ch-letter{color:var(--gold-l)}
+.ch-letter{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);min-width:22px;padding-top:1px;flex-shrink:0}
+.ch-cost{font-size:12px;color:rgba(201,168,76,.55);margin-top:3px;font-style:italic}
+.ch-boost{font-size:11px;color:#80c878;margin-top:2px}
+
+/* ── OUTCOME ── */
+#outcome-sec{display:none;margin-bottom:14px}
+.out-good{border-left:4px solid var(--grn-l)}
+.out-bad{border-left:4px solid var(--blood-l)}
+.out-neutral{border-left:4px solid var(--gold-d)}
+.out-text{font-size:16px;line-height:1.75;color:var(--ink)}
+.out-effects{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.eff{font-family:'Cinzel',serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px}
+.eff-good{background:rgba(45,90,39,.12);color:var(--grn-l);border:1px solid rgba(45,90,39,.28)}
+.eff-bad{background:rgba(139,26,26,.12);color:#e57373;border:1px solid rgba(139,26,26,.28)}
+
+/* ── PARTY ── */
+#party-display{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.party-member{background:rgba(22,12,4,.7);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;flex:1;min-width:140px}
+.party-member.dead{opacity:.4;border-style:dashed}
+.pm-avatar{font-size:22px}
+.pm-name{font-family:'Cinzel',serif;font-size:12px;color:var(--parch);font-weight:600}
+.pm-skills{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.pm-skill{font-size:11px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:1px 6px;color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.5px}
+
+/* ── LOG ── */
+#log-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+#log-toggle span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.65}
+#log-body{display:none;max-height:150px;overflow-y:auto;margin-top:10px}
+.log-e{padding:5px 0;border-bottom:1px solid rgba(201,168,76,.08);font-size:13px;color:rgba(244,232,193,.55);line-height:1.4}
+.log-e.milestone{color:rgba(201,168,76,.7)}
+.log-day{font-family:'Cinzel',serif;font-size:10px;color:var(--gold);opacity:.7}
+
+/* ── END SCREENS ── */
+#screen-go,#screen-win{display:none;text-align:center;padding:40px 20px}
+.end-icon{font-size:88px;margin-bottom:18px;filter:drop-shadow(0 0 20px rgba(201,168,76,.4))}
+.end-title{font-family:'Cinzel',serif;font-size:clamp(28px,6vw,42px);font-weight:900;margin-bottom:12px}
+.end-sub{font-size:17px;line-height:1.75;max-width:520px;margin:0 auto 24px;font-style:italic;color:var(--parch);opacity:.85}
+#screen-go .end-title{color:var(--blood-l);text-shadow:0 0 20px rgba(192,57,43,.5)}
+#screen-win .end-title{color:var(--gold);text-shadow:0 0 20px rgba(201,168,76,.6)}
+
+/* ── SCORE SCREEN ── */
+.score-section{background:rgba(22,12,4,.7);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:24px;margin:16px 0;max-width:520px;margin-left:auto;margin-right:auto}
+.score-big{font-family:'Cinzel',serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1}
+.score-lbl{font-size:13px;color:var(--gold);opacity:.6;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
+.rating-badge{display:inline-block;font-family:'Cinzel',serif;font-size:22px;font-weight:900;padding:10px 28px;border-radius:8px;margin:14px 0;letter-spacing:2px}
+.rating-legendary{background:linear-gradient(135deg,#e8c97a,#c9a84c);color:#1a0f05;box-shadow:0 0 30px rgba(201,168,76,.6)}
+.rating-heroic{background:linear-gradient(135deg,#c0d8ff,#7ab8d4);color:#0d1e2a;box-shadow:0 0 20px rgba(122,184,212,.4)}
+.rating-merchant{background:linear-gradient(135deg,#c8e6c9,#4a8c42);color:#0a1f09;box-shadow:0 0 16px rgba(74,140,66,.4)}
+.rating-traveler{background:linear-gradient(135deg,#ffe0b2,#c9a84c);color:#2c1810}
+.rating-survivor{background:linear-gradient(135deg,#5c4a32,#2c1810);color:#e0cc94;border:1px solid rgba(201,168,76,.3)}
+.score-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;text-align:left}
+.sb-row{padding:8px 12px;background:rgba(244,232,193,.04);border-radius:6px;border:1px solid rgba(201,168,76,.1)}
+.sb-cat{font-family:'Cinzel',serif;font-size:10px;color:var(--gold);opacity:.7;letter-spacing:1px}
+.sb-val{font-family:'Cinzel',serif;font-size:16px;color:var(--parch);font-weight:700}
+.sb-row.full{grid-column:1/-1}
+.cargo-manifest{margin-top:18px;text-align:left;border-top:1px solid rgba(201,168,76,.2);padding-top:14px}
+.cargo-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:10px}
+.cargo-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(244,232,193,.04);border-radius:6px;margin-bottom:5px;border:1px solid rgba(201,168,76,.08)}
+.cargo-item-icon{font-size:20px}
+.cargo-item-info{flex:1}
+.cargo-item-name{font-family:'Cinzel',serif;font-size:12px;color:var(--parch)}
+.cargo-item-val{font-size:11px;color:var(--gold);opacity:.7}
+.cargo-bar{height:3px;border-radius:2px;background:rgba(201,168,76,.15);margin-top:3px}
+.cargo-bar-fill{height:100%;border-radius:2px;background:var(--gold)}
+
+/* ── UTILS ── */
+.hidden{display:none}
+.fade-in{animation:fadeIn .45s cubic-bezier(.22,1,.36,1)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.center{text-align:center}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:rgba(0,0,0,.15)}
+::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px}
+.flame{display:inline-block;animation:flicker 1.5s ease-in-out infinite alternate}
+@keyframes flicker{0%{filter:drop-shadow(0 0 4px #ff9500)}100%{filter:drop-shadow(0 0 12px #ff6500) drop-shadow(0 0 20px #ff3300)}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div id="bg-layer"><div class="dune dune1"></div><div class="dune dune2"></div><div class="dune dune3"></div></div>
+<div id="app">
+
+<!-- TITLE -->
+<div id="screen-title" class="screen">
+  <div class="emblem">⚜️</div>
+  <div class="t-latin">Anno Domini · SPQR · Via Sericae</div>
+  <div class="t-main">Via Sericae</div>
+  <div class="t-sub">The Silk Road</div>
+  <div class="t-route">🐉 Chang'an &nbsp;⟶&nbsp; Dunhuang &nbsp;⟶&nbsp; Samarkand &nbsp;⟶&nbsp; Ctesiphon &nbsp;⟶&nbsp; Rome 🏛️</div>
+  <div class="divider">· · ·</div>
+  <div class="t-desc">The year is 100 AD. You are a Roman merchant freshly arrived in Han Dynasty China. Your wagons brim with Eastern silks, spices, lacquerware and jade. The 11,000-kilometre journey home begins now — from the Dragon Throne of Chang'an, across the Taklimakan Desert, over the Pamir passes, through Persia and Syria, to the Eternal City of Rome.</div>
+  <button class="btn btn-gold" onclick="showSetup()" style="font-size:16px;padding:15px 44px">⚔️ &nbsp;Assemble Your Caravan</button>
+</div>
+
+<!-- SETUP -->
+<div id="screen-setup" class="screen hidden">
+  <div class="setup-title">⚜️ &nbsp;Your Merchant Company</div>
+  <div class="setup-sub">Name each merchant and choose up to 2 skills — these affect outcomes throughout the journey</div>
+  <div class="chars-grid" id="chars-grid"></div>
+  <div class="center"><button class="btn btn-gold" onclick="startGame()" style="font-size:15px;padding:14px 40px">🐫 &nbsp;Begin the Journey East → West</button></div>
+</div>
+
+<!-- GAME -->
+<div id="screen-game" class="hidden">
+  <div id="hud">
+    <div class="stat-box" id="sb-m"><div class="s-icon">👥</div><div class="s-label">Merchants</div><div class="s-value" id="hud-m">3</div><div class="s-bar"><div class="s-bar-fill" id="bar-m" style="background:#e57373;width:100%"></div></div></div>
+    <div class="stat-box" id="sb-f"><div class="s-icon">🌾</div><div class="s-label">Provisions</div><div class="s-value" id="hud-f">80</div><div class="s-bar"><div class="s-bar-fill" id="bar-f" style="background:#80c878;width:80%"></div></div></div>
+    <div class="stat-box" id="sb-g"><div class="s-icon">💰</div><div class="s-label">Denarii</div><div class="s-value" id="hud-g">120</div><div class="s-bar"><div class="s-bar-fill" id="bar-g" style="background:#c9a84c;width:60%"></div></div></div>
+    <div class="stat-box" id="sb-c"><div class="s-icon">📦</div><div class="s-label">Cargo</div><div class="s-value" id="hud-c">60</div><div class="s-bar"><div class="s-bar-fill" id="bar-c" style="background:#7ab8d4;width:60%"></div></div></div>
+  </div>
+  <div id="party-display"></div>
+  <div class="prog-label">⚑ &nbsp;Route: Chang'an → Rome</div>
+  <div class="prog-track" id="prog-track"></div>
+  <div id="anim-stage">
+    <div class="stage-bg" id="stage-bg"></div>
+    <div class="stage-overlay" id="stage-overlay"></div>
+    <div class="stage-particles" id="stage-particles"></div>
+    <div class="stage-icon-big" id="stage-icon">🌅</div>
+    <div class="stage-day" id="stage-day">Day 1</div>
+    <div class="stage-label" id="stage-type-lbl">DEPARTURE</div>
+    <div class="region-badge" id="region-badge">CHINA</div>
+  </div>
+  <div class="panel fade-in" id="narrative-card" style="margin-bottom:14px">
+    <div class="ev-hdr">
+      <div class="ev-title-wrap">
+        <div class="ev-tag tag-travel" id="ev-tag">Travel</div>
+        <div class="ev-title" id="ev-title">Departing Chang'an</div>
+      </div>
+    </div>
+    <div class="ev-text" id="ev-text"></div>
+    <div id="skill-bonus-display"></div>
+  </div>
+  <div id="choices-sec">
+    <div class="ch-label">⚖️ &nbsp;What do you do?</div>
+    <div id="choices-con"></div>
+  </div>
+  <div id="outcome-sec">
+    <div class="panel" id="out-card">
+      <div class="out-text" id="out-text"></div>
+      <div class="out-effects" id="out-efx"></div>
+    </div>
+  </div>
+  <div id="cont-sec" class="hidden center" style="margin-top:12px">
+    <button class="btn btn-gold" onclick="nextEvent()">Continue the Journey →</button>
+  </div>
+  <div class="panel-dark" style="margin-top:16px">
+    <div id="log-toggle" onclick="toggleLog()">
+      <span>📜 &nbsp;Journey Log</span>
+      <span id="log-arr" style="color:var(--gold);font-size:14px;margin-left:auto">▼</span>
+    </div>
+    <div id="log-body"></div>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div id="screen-go" class="screen">
+  <div class="end-icon">💀</div>
+  <div class="end-title">Caravan Lost</div>
+  <div class="end-sub" id="go-reason">Your caravan has met its end far from home.</div>
+  <div class="score-section">
+    <div class="score-lbl">Distance from Chang'an</div>
+    <div class="score-big" id="go-score">0</div>
+    <div class="score-lbl" style="margin-top:4px">km travelled</div>
+  </div>
+  <button class="btn btn-gold" onclick="resetGame()" style="margin-top:6px">⟳ &nbsp;Try Again</button>
+</div>
+
+<!-- WIN -->
+<div id="screen-win" class="screen">
+  <div class="end-icon">🏛️</div>
+  <div class="end-title">Roma Aeterna!</div>
+  <div class="end-sub" id="win-txt">Your caravan completed the legendary Silk Road!</div>
+  <div class="score-section">
+    <div id="win-rating-badge" class="rating-badge rating-legendary">LEGENDARY</div>
+    <div class="score-lbl" style="margin-top:10px">Final Score</div>
+    <div class="score-big" id="win-score">0</div>
+    <div class="score-lbl" style="margin-top:4px">denarii value</div>
+    <div class="score-breakdown" id="score-breakdown"></div>
+    <div class="cargo-manifest" id="cargo-manifest"></div>
+  </div>
+  <button class="btn btn-gold" onclick="resetGame()" style="margin-top:6px">⟳ &nbsp;Play Again</button>
+</div>
+
+</div><!-- /app -->
+<script>
+// ═══════ STARS ═══════
+(()=>{
+  const c=document.getElementById('stars');
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<110;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*2.5+.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${2+Math.random()*5}s;--del:${Math.random()*6}s`;
+    frag.appendChild(s);
+  }
+  c.appendChild(frag);
+})();
+
+// ═══════ SKILLS (8 total) ═══════
+const SKILLS={
+  warrior: {icon:'⚔️', name:'Warrior',   desc:'Combat & defense',  bonus:'Wins battles',      color:'#e57373'},
+  healer:  {icon:'🌿', name:'Healer',    desc:'Medicine & illness', bonus:'Cures the sick',    color:'#80c878'},
+  trader:  {icon:'🤝', name:'Trader',    desc:'Prices & deals',     bonus:'Better margins',    color:'#c9a84c'},
+  scout:   {icon:'🔭', name:'Scout',     desc:'Scouting & traps',   bonus:'Spots threats',     color:'#7ab8d4'},
+  diplomat:{icon:'🎭', name:'Diplomat',  desc:'Persuasion & law',   bonus:'Wins hearts',       color:'#c07cc0'},
+  navigator:{icon:'🧭',name:'Navigator', desc:'Routes & geography', bonus:'Finds shortcuts',   color:'#4a8fa8'},
+  scholar: {icon:'📚', name:'Scholar',   desc:'Languages & lore',   bonus:'Cultural knowledge',color:'#a0c8f0'},
+  engineer:{icon:'⚙️', name:'Engineer',  desc:'Repairs & building', bonus:'Fixes problems',    color:'#d4a876'},
+};
+
+// ═══════ WAYPOINTS (Chang'an → Rome, 9 stops) ═══════
+const WP=[
+  {name:"Chang'an",  icon:'🐉', km:0,     region:'CHINA'},
+  {name:'Dunhuang',  icon:'🗿', km:1500,  region:'SILK ROAD'},
+  {name:'Kashgar',   icon:'🏔️', km:3100,  region:'PAMIRS'},
+  {name:'Samarkand', icon:'🌙', km:4800,  region:'SOGDIA'},
+  {name:'Merv',      icon:'🌴', km:6200,  region:'PARTHIA'},
+  {name:'Ctesiphon', icon:'🏰', km:7800,  region:'PERSIA'},
+  {name:'Antioch',   icon:'🕌', km:9200,  region:'SYRIA'},
+  {name:'Athens',    icon:'🏺', km:10200, region:'GREECE'},
+  {name:'Rome',      icon:'🏛️', km:11000, region:'ITALIA'},
+];
+
+// ═══════ CARGO CATEGORIES (for rich scoring) ═══════
+const CARGO_TYPES={
+  silk:    {icon:'🧵', name:'Eastern Silk',   value:4,  desc:'Precious bolts of Han Dynasty silk'},
+  spice:   {icon:'🌶️', name:'Rare Spices',    value:3,  desc:'Pepper, cinnamon & saffron'},
+  jade:    {icon:'💚', name:'Jade & Gems',     value:5,  desc:'Carved jade and uncut gemstones'},
+  lacquer: {icon:'🏺', name:'Lacquerware',    value:2,  desc:'Exquisite Han lacquer vessels'},
+  bronze:  {icon:'🔔', name:'Bronze Works',   value:2,  desc:'Bells and statuary'},
+  papyrus: {icon:'📜', name:'Papyrus & Texts',value:1,  desc:'Rare scrolls and documents'},
+  wine:    {icon:'🍷', name:'Roman Wine',     value:3,  desc:'Amphorae of prized Roman vintage'},
+  gold:    {icon:'⚱️', name:'Gold Vessels',   value:6,  desc:'Ornate golden ceremonial pieces'},
+};
+
+// ═══════ STAGE CONFIGS (per event type) ═══════
+const STAGE_CFG={
+  battle:   {bg:'linear-gradient(135deg,#200505 0%,#3a0808 50%,#100303 100%)',  particle:'fire',    extra:'swords'},
+  disease:  {bg:'linear-gradient(135deg,#151508 0%,#252510 50%,#0d0d05 100%)',  particle:'smoke',   extra:'fog'},
+  weather:  {bg:'linear-gradient(135deg,#040c18 0%,#081828 50%,#020508 100%)',  particle:'wind',    extra:'clouds'},
+  political:{bg:'linear-gradient(135deg,#120820 0%,#1e1030 50%,#080410 100%)',  particle:'sparkle', extra:'scroll'},
+  travel:   {bg:'linear-gradient(135deg,#061008 0%,#0e1e10 50%,#030805 100%)',  particle:'dust',    extra:'caravan'},
+  market:   {bg:'linear-gradient(135deg,#1a0e00 0%,#2e1a00 50%,#0e0700 100%)', particle:'sparkle', extra:'coins'},
+  cultural: {bg:'linear-gradient(135deg,#060c1e 0%,#0c1830 50%,#030610 100%)', particle:'glow',    extra:'lanterns'},
+};
+
+// ═══════ ALL EVENTS (50 unique) ═══════
+const EVS=[
+
+  // ── BATTLE (9) ──
+  {id:'b1',type:'battle',icon:'⚔️',tag:'tag-battle',title:'Bandits Block the Road',
+   text:'A band of Parthian brigands emerges from the dust, blocking the road ahead. Their leader demands tribute, eyes fixed on your loaded wagons.',
+   skillBonus:{warrior:'Your warrior can lead the charge with advantage.',scout:'Your scout spotted them early — surprise is on your side.'},
+   ch:[{t:'Fight them off with your guards.',c:'⚔️ Risk lives',b:['warrior'],o:'bf'},
+       {t:'Pay the tribute they demand.',c:'💰 −25 denarii',b:[],o:'bp'},
+       {t:'Outrun them on the eastern trail.',c:'🌾 −10 provisions',b:['scout','navigator'],o:'bfl'}]},
+
+  {id:'b2',type:'battle',icon:'🏹',tag:'tag-battle',title:'Desert Raiders at Dawn',
+   text:'Nomadic raiders have shadowed your caravan for two days. At dawn they strike your rear wagons with fury.',
+   skillBonus:{warrior:'Your warrior can organise a strong counter-attack.',scout:'Your scout detected their camp last night and can set an ambush.'},
+   ch:[{t:'Form a defensive circle with the wagons.',c:'⏳ −20 provisions',b:['warrior'],o:'bd'},
+       {t:'Bribe them with silk from your cargo.',c:'📦 −15 cargo',b:['trader'],o:'bs'},
+       {t:'Negotiate a safe-passage agreement.',c:'🎲 Luck-based',b:['diplomat'],o:'bn'}]},
+
+  {id:'b3',type:'battle',icon:'🗡️',tag:'tag-battle',title:'Rival Caravan Ambush',
+   text:'A rival Parthian trading house has hired mercenaries to eliminate the competition. They attack at a narrow mountain pass.',
+   skillBonus:{warrior:'Your warrior knows how to defend a chokepoint.',scout:'Your scout found an alternate route last night.'},
+   ch:[{t:'Stand and fight — hold the pass.',c:'⚔️ Risk merchant',b:['warrior'],o:'b3fight'},
+       {t:'Offer a share of profits to the mercenaries.',c:'💰 −35 denarii',b:['trader'],o:'b3buy'},
+       {t:'Retreat and find an alternate route.',c:'🌾 −20 provisions',b:['navigator','scout'],o:'b3flee'}]},
+
+  {id:'b4',type:'battle',icon:'🔱',tag:'tag-battle',title:'Roman Legion Checkpoint',
+   text:'A detachment of rogue Roman legionaries — deserters — is extorting travellers near Antioch. They demand payment or service.',
+   skillBonus:{warrior:'A fellow warrior can challenge their leader to single combat.',diplomat:'Your diplomat can invoke legal Roman protections.'},
+   ch:[{t:'Challenge their decurion to single combat.',c:'⚔️ Risk life',b:['warrior'],o:'b4duel'},
+       {t:'Pay their toll and move on.',c:'💰 −20 denarii',b:[],o:'b4pay'},
+       {t:'Show your Senate papers and invoke Roman law.',c:'🎭 Requires confidence',b:['diplomat'],o:'b4legal'}]},
+
+  {id:'b5',type:'battle',icon:'🐺',tag:'tag-battle',title:'Pack of Wolves',
+   text:'A large pack of wolves stalks your caravan through a mountain pass for two nights, targeting your pack animals.',
+   skillBonus:{warrior:'Your warrior can lead a night watch to drive them off.',scout:'Your scout can read their patterns and set traps.'},
+   ch:[{t:'Post armed watch through the night.',c:'⚔️ Exhausting',b:['warrior','scout'],o:'b5watch'},
+       {t:'Light large bonfires to deter the pack.',c:'🌾 −8 provisions',b:[],o:'b5fire'},
+       {t:'Sacrifice one load of cargo as distraction.',c:'📦 −12 cargo',b:[],o:'b5sacrifice'}]},
+
+  {id:'b6',type:'battle',icon:'🏴',tag:'tag-battle',title:'Tax Collector Shakedown',
+   text:'A local warlord\'s tax collector has blockaded the road and is sizing up your cargo with greedy eyes.',
+   skillBonus:{trader:'Your trader knows how to undervalue goods on declaration.',diplomat:'Your diplomat can cite treaty protections.'},
+   ch:[{t:'Declare full cargo value and pay the tax.',c:'💰 −30 denarii',b:[],o:'b6pay'},
+       {t:'Bribe the collector directly.',c:'💰 −15 denarii',b:['trader'],o:'b6bribe'},
+       {t:'Challenge the legality of the blockade.',c:'🎲 Diplomatic risk',b:['diplomat'],o:'b6dispute'}]},
+
+  {id:'b7',type:'battle',icon:'🏇',tag:'tag-battle',title:'Mounted Nomad Patrol',
+   text:'A patrol of fierce Xiongnu horsemen encircles your caravan. Their shaman demands a "tribute to the sky gods" in the form of your finest goods.',
+   skillBonus:{scholar:'Your scholar knows Xiongnu customs and can appeal to their traditions.',warrior:'Your warrior can call their bluff.'},
+   ch:[{t:'Offer ceremonial gifts and pray they accept.',c:'📦 −10 cargo',b:['scholar'],o:'b7gift'},
+       {t:'Stand your ground — they are bluffing.',c:'⚔️ Risk everything',b:['warrior'],o:'b7stand'},
+       {t:'Scatter — split the caravan and reconvene.',c:'🌾 −15 provisions',b:['scout'],o:'b7scatter'}]},
+
+  {id:'b8',type:'battle',icon:'🌊',tag:'tag-battle',title:'River Pirates',
+   text:'While ferrying cargo across the Euphrates, river pirates in low boats emerge from the reed beds and attack.',
+   skillBonus:{warrior:'Your warrior can organise a ferocious defence from the ferry.',engineer:'Your engineer can rig a rope barrier to stop the boats.'},
+   ch:[{t:'Fight back from the ferry decks.',c:'⚔️ Risk cargo',b:['warrior'],o:'b8fight'},
+       {t:'Throw valuable bales overboard to distract them.',c:'📦 −20 cargo',b:[],o:'b8distract'},
+       {t:'Bribe the pirate captain directly.',c:'💰 −30 denarii',b:['trader'],o:'b8bribe'}]},
+
+  {id:'b9',type:'battle',icon:'🗺️',tag:'tag-battle',title:'Ambush in the Gorge',
+   text:'Your navigator warned you about this passage. Sure enough — archers line the cliffs of the gorge, and a chain blocks the road.',
+   skillBonus:{navigator:'Your navigator knows an alternate path that bypasses the gorge entirely.',engineer:'Your engineer can create a diversion with smoke and noise.'},
+   ch:[{t:'Charge through — speed is your only hope.',c:'⚔️ Extreme risk',b:['warrior'],o:'b9charge'},
+       {t:'Take the navigator\'s alternate path.',c:'🌾 −22 provisions',b:['navigator'],o:'b9detour'},
+       {t:'Wait until nightfall and slip through quietly.',c:'📦 Minor risk',b:['scout'],o:'b9night'}]},
+
+  // ── DISEASE (8) ──
+  {id:'d1',type:'disease',icon:'🤒',tag:'tag-disease',title:'Plague Strikes the Caravan',
+   text:'One of your merchants has fallen gravely ill with fever. A local healer offers medicine, but it is expensive — and its origins are unknown.',
+   skillBonus:{healer:'Your healer can treat the illness themselves, saving coin.',navigator:'Your navigator knows a shortcut to the nearest major city.'},
+   ch:[{t:'Purchase the medicine immediately.',c:'💰 −30 denarii',b:[],o:'dm'},
+       {t:'Your healer treats them with local herbs.',c:'🌿 If you have a healer',b:['healer'],o:'dm_healer'},
+       {t:'Quarantine the sick and press on.',c:'👥 Risk losing a merchant',b:[],o:'dq'}]},
+
+  {id:'d2',type:'disease',icon:'🦟',tag:'tag-disease',title:'Contaminated Well',
+   text:'The well in this oasis carries a foul smell. Your caravan is desperately thirsty after three days in the desert.',
+   skillBonus:{healer:'Your healer can test the water for safety.',scout:'Your scout believes there is a cleaner source nearby.'},
+   ch:[{t:'Drink the water — desperation wins.',c:'⚠️ Risk illness',b:[],o:'dd'},
+       {t:'Ration remaining water carefully.',c:'🌾 −15 provisions',b:['navigator'],o:'dra'},
+       {t:'Trade for clean water from a passing tribe.',c:'💰 −15 denarii',b:['trader'],o:'dtw'}]},
+
+  {id:'d3',type:'disease',icon:'🐀',tag:'tag-disease',title:'Rats Infest the Wagon',
+   text:'Rats have gotten into your grain stores during the night, eating through sacks and contaminating your provisions.',
+   skillBonus:{healer:'Your healer can salvage and purify some of the supplies.',trader:'Your trader can quickly source replacement provisions.'},
+   ch:[{t:'Discard all contaminated stores immediately.',c:'🌾 −25 provisions',b:[],o:'d3discard'},
+       {t:'Attempt to salvage what you can.',c:'🌿 Risk illness',b:['healer'],o:'d3salvage'},
+       {t:'Buy emergency provisions at the next town.',c:'💰 −20 denarii',b:['trader'],o:'d3buy'}]},
+
+  {id:'d4',type:'disease',icon:'☀️',tag:'tag-disease',title:'Heatstroke in the Desert',
+   text:'Three days with no shade and scorching temperatures. Two merchants have collapsed. You must act fast.',
+   skillBonus:{healer:'Your healer knows exactly how to treat heat exhaustion.',navigator:'Your navigator can find the fastest path to shade.'},
+   ch:[{t:'Rest through the hottest hours each day.',c:'🌾 −15 provisions',b:['navigator'],o:'d4rest'},
+       {t:'Push through — shade is close.',c:'👥 Risk merchant',b:[],o:'d4push'},
+       {t:'Find shelter and treat the ill.',c:'💰 −15 denarii',b:['healer'],o:'d4treat'}]},
+
+  {id:'d5',type:'disease',icon:'🐍',tag:'tag-disease',title:'Serpent Bite',
+   text:'One of your merchants was bitten by a desert viper while loading cargo at dawn. The venom works fast.',
+   skillBonus:{healer:'Your healer knows antivenom remedies.'},
+   ch:[{t:'Rush to the nearest settlement for help.',c:'🌾 −10 provisions',b:['navigator'],o:'d5rush'},
+       {t:'Apply the healer\'s remedy immediately.',c:'🌿 Requires healer',b:['healer'],o:'d5antivenom'},
+       {t:'Try folk remedies from the caravan.',c:'🎲 Risky',b:[],o:'d5folk'}]},
+
+  {id:'d6',type:'disease',icon:'🌿',tag:'tag-disease',title:'Spoiled Provisions',
+   text:'Your cook discovers that several sacks of grain have turned mouldy — possibly from river water during the last crossing.',
+   skillBonus:{healer:'Your healer can identify which stores are still safe to eat.',engineer:'Your engineer can construct drier storage to prevent further losses.'},
+   ch:[{t:'Discard everything suspect.',c:'🌾 −20 provisions',b:[],o:'d6discard'},
+       {t:'Have the healer inspect each sack carefully.',c:'🌿 Saves provisions',b:['healer'],o:'d6inspect'},
+       {t:'Ration severely and push to the next town.',c:'🌾 −10 provisions risk',b:['navigator'],o:'d6push'}]},
+
+  {id:'d7',type:'disease',icon:'💨',tag:'tag-disease',title:'Yellow Fever Along the River',
+   text:'A village you must pass through is in the grip of a terrible fever. Locals warn you not to stop — but you need to resupply.',
+   skillBonus:{healer:'Your healer can recommend minimal-exposure protocols.',diplomat:'Your diplomat can arrange a discreet resupply from the village edge.'},
+   ch:[{t:'Pass through quickly — hope for the best.',c:'👥 Risk illness',b:[],o:'d7pass'},
+       {t:'Camp outside and send one person in.',c:'👥 Minor risk',b:['healer'],o:'d7single'},
+       {t:'Take the long route around the village.',c:'🌾 −18 provisions',b:['navigator'],o:'d7detour'}]},
+
+  {id:'d8',type:'disease',icon:'🦂',tag:'tag-disease',title:'Scorpion Nest in the Camp',
+   text:'Breaking camp at dawn, three merchants have been stung by scorpions hiding under their bedrolls. Pain and swelling are spreading.',
+   skillBonus:{healer:'Your healer has seen this before and knows the correct treatment.',scholar:'Your scholar knows which plants from this region reduce venom.'},
+   ch:[{t:'Treat them as best you can and march on.',c:'👥 Minor risk',b:['healer'],o:'d8treat'},
+       {t:'Rest for two days until the venom clears.',c:'🌾 −12 provisions',b:[],o:'d8rest'},
+       {t:'Race to the next oasis town for a doctor.',c:'💰 −18 denarii',b:['navigator'],o:'d8race'}]},
+
+  // ── WEATHER (8) ──
+  {id:'w1',type:'weather',icon:'🌪️',tag:'tag-weather',title:'Wall of Sand',
+   text:'A massive sandstorm towers on the horizon — a wall of orange that blots out the sun. A Bedouin guide offers to lead you through a hidden canyon.',
+   skillBonus:{scout:'Your scout can navigate by memory even in zero visibility.',navigator:'Your navigator has detailed maps of the region.'},
+   ch:[{t:'Hire the Bedouin guide.',c:'💰 −20 denarii',b:['navigator'],o:'wg'},
+       {t:'Push through with covered wagons.',c:'📦 Risk cargo',b:['scout'],o:'wp'},
+       {t:'Wait three days for it to pass.',c:'🌾 −15 provisions',b:[],o:'ww'}]},
+
+  {id:'w2',type:'weather',icon:'❄️',tag:'tag-weather',title:'The Mountain Blizzard',
+   text:'An early blizzard has sealed the mountain pass with snow. The only alternative adds two weeks to your journey.',
+   skillBonus:{navigator:'Your navigator knows a lesser-used shepherd\'s path.',scout:'Your scout can test whether the pass is still crossable.'},
+   ch:[{t:'Attempt the pass before it worsens.',c:'⚔️ High risk',b:['scout','warrior'],o:'wb'},
+       {t:'Take the longer southern route.',c:'🌾 −25 provisions',b:['navigator'],o:'wl'},
+       {t:'Winter in a nearby village.',c:'💰 −35 denarii',b:[],o:'wn'}]},
+
+  {id:'w3',type:'weather',icon:'🌊',tag:'tag-weather',title:'Flooded River Crossing',
+   text:'Spring floods have turned a normally calm river into a raging torrent. Your wagons cannot cross safely.',
+   skillBonus:{navigator:'Your navigator knows of a safer ford upstream.',warrior:'Your warrior can help secure ropes and guide wagons.',engineer:'Your engineer can build a temporary raft crossing.'},
+   ch:[{t:'Attempt the crossing with roped wagons.',c:'📦 Risk cargo',b:['warrior'],o:'w3cross'},
+       {t:'Find the ford upstream — adds days.',c:'🌾 −18 provisions',b:['navigator'],o:'w3ford'},
+       {t:'Pay ferrymen to carry everything.',c:'💰 −30 denarii',b:['trader'],o:'w3ferry'}]},
+
+  {id:'w4',type:'weather',icon:'⚡',tag:'tag-weather',title:'Lightning Strikes the Camp',
+   text:'A ferocious lightning storm swept through camp in the night, setting two wagons ablaze and scattering pack animals.',
+   skillBonus:{warrior:'Your warrior quickly organises the crew to fight the fire.',scout:'Your scout tracked and recovered most of the lost animals.',engineer:'Your engineer knows how to control and contain the blaze.'},
+   ch:[{t:'Fight the fire — save the cargo.',c:'📦 Risk 20 cargo',b:['warrior','engineer'],o:'w4fight'},
+       {t:'Let the wagons burn and save the animals.',c:'📦 −20 cargo certain',b:['scout'],o:'w4animals'},
+       {t:'Grab essentials and abandon the wagons.',c:'📦 −30 cargo',b:[],o:'w4abandon'}]},
+
+  {id:'w5',type:'weather',icon:'🌫️',tag:'tag-weather',title:'Lost in the Desert Fog',
+   text:'A thick morning fog has descended. Your caravan has been marching in circles for six hours. Provisions are running thin.',
+   skillBonus:{navigator:'Your navigator can use the stars once the fog lifts slightly.',scout:'Your scout can read animal tracks to find the right path.'},
+   ch:[{t:'Camp and wait for the fog to lift.',c:'🌾 −12 provisions',b:[],o:'w5wait'},
+       {t:'Follow your navigator\'s star readings.',c:'🧭 Requires skill',b:['navigator'],o:'w5nav'},
+       {t:'Follow animal tracks out.',c:'🔭 Requires skill',b:['scout'],o:'w5tracks'}]},
+
+  {id:'w6',type:'weather',icon:'🌬️',tag:'tag-weather',title:'The Gobi Winds',
+   text:'Furious gale-force winds have been howling for four days across the Gobi. Your tents have shredded and camels refuse to walk.',
+   skillBonus:{engineer:'Your engineer can reinforce the wagons and lash down cargo.',navigator:'Your navigator knows the winds will shift in two days if you wait at the right altitude.'},
+   ch:[{t:'Push through against the winds.',c:'🌾 −18 provisions, 📦 −10 cargo',b:['warrior'],o:'w6push'},
+       {t:'Shelter and wait for the winds to ease.',c:'🌾 −14 provisions',b:['navigator'],o:'w6wait'},
+       {t:'Have the engineer fortify everything and march slow.',c:'💰 −10 denarii',b:['engineer'],o:'w6fortify'}]},
+
+  {id:'w7',type:'weather',icon:'🌧️',tag:'tag-weather',title:'Monsoon Rains',
+   text:'Torrential rains have turned the mountain road into a river of mud. Wagons sink to their axles. The silk cargo risks being soaked.',
+   skillBonus:{engineer:'Your engineer can lay timber tracks to pull wagons through.',navigator:'Your navigator knows a drier high ridge path.'},
+   ch:[{t:'Press on — accept the mud and the losses.',c:'📦 −15 cargo',b:[],o:'w7press'},
+       {t:'Have the engineer build a corduroy road.',c:'💰 −12 denarii',b:['engineer'],o:'w7corduroy'},
+       {t:'Take the ridge path — longer but dry.',c:'🌾 −16 provisions',b:['navigator'],o:'w7ridge'}]},
+
+  {id:'w8',type:'weather',icon:'🌅',tag:'tag-weather',title:'Drought at the Oasis',
+   text:'The oasis marked on your maps has dried completely. Your provisions are low and the next water source is six days away.',
+   skillBonus:{navigator:'Your navigator recalls an alternate water source from old maps.',healer:'Your healer can devise strict rationing to extend your water supply.'},
+   ch:[{t:'Race to the next known water source.',c:'👥 Risk collapse',b:['navigator'],o:'w8race'},
+       {t:'Implement strict healer-supervised rationing.',c:'🌾 −20 provisions',b:['healer'],o:'w8ration'},
+       {t:'Dig at the dry oasis bed — water may remain underground.',c:'⚙️ Uncertain',b:['engineer'],o:'w8dig'}]},
+
+  // ── POLITICAL (8) ──
+  {id:'p1',type:'political',icon:'🏛️',tag:'tag-political',title:'The Governor Demands a Cut',
+   text:'The regional governor has heard of your valuable cargo. His representative blocks the city gates demanding a "tax".',
+   skillBonus:{diplomat:'Your diplomat can invoke Silk Road treaty rights.',trader:'Your trader can negotiate the payment down substantially.'},
+   ch:[{t:'Pay the corrupt official.',c:'💰 −40 denarii',b:[],o:'pg'},
+       {t:'Invoke Roman diplomatic rights.',c:'🎲 Risky gamble',b:['diplomat'],o:'pr'},
+       {t:'Negotiate the tax down.',c:'💰 −20 denarii',b:['trader'],o:'pn'}]},
+
+  {id:'p2',type:'political',icon:'🤝',tag:'tag-political',title:'A Sogdian Alliance',
+   text:'A wealthy Sogdian merchant offers to merge his caravan with yours — extra guards and provisions, but political complications with his enemies.',
+   skillBonus:{trader:'Your trader can negotiate an extremely profitable arrangement.',diplomat:'Your diplomat can navigate the political complications.'},
+   ch:[{t:'Accept the alliance fully.',c:'📦 +20 cargo value',b:[],o:'pa'},
+       {t:'Negotiate a limited trade arrangement.',c:'💰 +15 denarii',b:['trader','diplomat'],o:'pd2'},
+       {t:'Decline — trust no one.',c:'No change',b:[],o:'pd'}]},
+
+  {id:'p3',type:'political',icon:'👑',tag:'tag-political',title:'The Khan\'s Invitation',
+   text:'A local Khan has heard of your Roman goods. He invites your company to feast at his court — a great honour, but his motives are unclear.',
+   skillBonus:{diplomat:'Your diplomat knows court protocol intimately.',trader:'Your trader can turn this into a lucrative business meeting.'},
+   ch:[{t:'Attend and bring lavish gifts.',c:'📦 −8 cargo',b:['diplomat'],o:'kf'},
+       {t:'Attend empty-handed with goodwill.',c:'🎲 Social risk',b:['diplomat'],o:'ke'},
+       {t:'Send a merchant envoy and continue.',c:'👥 Minor risk',b:['trader'],o:'kv'}]},
+
+  {id:'p4',type:'political',icon:'⚖️',tag:'tag-political',title:'Border Customs Seizure',
+   text:'A customs official at the Persian border claims your paperwork is invalid and threatens to seize your entire cargo.',
+   skillBonus:{diplomat:'Your diplomat can challenge this legally.',trader:'Your trader has experience greasing administrative wheels.',scholar:'Your scholar can find the relevant legal precedents.'},
+   ch:[{t:'Produce your Senate documentation.',c:'📜 Depends on papers',b:['diplomat','scholar'],o:'p4docs'},
+       {t:'Bribe the customs official.',c:'💰 −25 denarii',b:['trader'],o:'p4bribe'},
+       {t:'Contest the seizure loudly in public.',c:'🎲 High risk, high reward',b:['diplomat','warrior'],o:'p4contest'}]},
+
+  {id:'p5',type:'political',icon:'🕊️',tag:'tag-political',title:'Feuding City-States',
+   text:'Two rival city-states are at war with each other. Both roads pass through contested territory — your caravan is caught in the middle.',
+   skillBonus:{diplomat:'Your diplomat can negotiate safe passage with both sides.',navigator:'Your navigator knows a path that bypasses both territories.'},
+   ch:[{t:'Negotiate passage with both parties.',c:'🎭 Diplomatic challenge',b:['diplomat'],o:'p5negotiate'},
+       {t:'Take the long route through the mountains.',c:'🌾 −22 provisions',b:['navigator'],o:'p5mountains'},
+       {t:'Pay tribute to whichever side controls the road.',c:'💰 −30 denarii',b:[],o:'p5tribute'}]},
+
+  {id:'p6',type:'political',icon:'📜',tag:'tag-political',title:'Forged Trade Documents',
+   text:'A shady merchant is selling forged Imperial Chinese travel documents. They could get you through multiple checkpoints — or land you in a dungeon.',
+   skillBonus:{scholar:'Your scholar can assess the authenticity of documents.',trader:'Your trader knows the risk is worth it if the price is right.'},
+   ch:[{t:'Buy the forged documents and risk it.',c:'💰 −15 denarii, 🎲 risk',b:['trader'],o:'p6buy'},
+       {t:'Have your scholar authenticate them first.',c:'📚 Scholar check',b:['scholar'],o:'p6check'},
+       {t:'Report the forger to the authorities.',c:'💰 +10 reward',b:['diplomat'],o:'p6report'}]},
+
+  {id:'p7',type:'political',icon:'🏰',tag:'tag-political',title:'A City Under Siege',
+   text:'The city you planned to resupply in is under siege by a rival kingdom. The gates are sealed and arrows fly from the walls.',
+   skillBonus:{navigator:'Your navigator can find a way to the besieging army\'s market camp.',engineer:'Your engineer recognises a structural weakness in the siege lines.'},
+   ch:[{t:'Trade with the besieging army\'s camp.',c:'💰 −10 denarii, +5 provisions',b:['navigator','trader'],o:'p7siege'},
+       {t:'Wait out the siege outside the walls.',c:'🌾 −20 provisions',b:[],o:'p7wait'},
+       {t:'Sneak through the siege lines at night.',c:'⚔️ High risk',b:['scout','engineer'],o:'p7sneak'}]},
+
+  {id:'p8',type:'political',icon:'⚔️',tag:'tag-political',title:'Imperial Conscription',
+   text:'A Han general stops your caravan and threatens to conscript your guards into his army. Without them, you are defenceless.',
+   skillBonus:{diplomat:'Your diplomat can invoke foreign merchant protections.',warrior:'Your warrior can negotiate man-to-man with the general.',scholar:'Your scholar knows the relevant Han imperial law.'},
+   ch:[{t:'Invoke foreign diplomatic immunity.',c:'🎭 Requires boldness',b:['diplomat','scholar'],o:'p8invoke'},
+       {t:'Offer a substantial "donation" to the general\'s campaign.',c:'💰 −35 denarii',b:['trader'],o:'p8donate'},
+       {t:'Comply — lose the guards but keep moving.',c:'👥 Lose protection',b:[],o:'p8comply'}]},
+
+  // ── TRAVEL (8) ──
+  {id:'t1',type:'travel',icon:'🌅',tag:'tag-travel',title:'A Fork in the Road',
+   text:'Two roads diverge before you. The northern route is faster but passes through disputed territory. The southern road winds through fertile lands.',
+   skillBonus:{scout:'Your scout can do reconnaissance of the northern road.',navigator:'Your navigator has heard reliable reports from travellers.'},
+   ch:[{t:'Take the northern route — speed matters.',c:'⚔️ Battle risk',b:['scout'],o:'tn'},
+       {t:'Follow the southern road.',c:'🌾 −10 provisions (longer)',b:['navigator'],o:'ts'},
+       {t:'Ask a local shepherd for advice.',c:'💰 −5 denarii',b:[],o:'ta'}]},
+
+  {id:'t2',type:'travel',icon:'🐪',tag:'tag-travel',title:'The Camel Market',
+   text:'You have reached a famous camel market. Upgrading your pack animals could carry more cargo across the coming desert.',
+   skillBonus:{trader:'Your trader can spot quality animals and negotiate fiercely.',navigator:'Your navigator knows exactly what you\'ll need ahead.'},
+   ch:[{t:'Buy two strong Bactrian camels.',c:'💰 −40 denarii',b:['trader'],o:'tc'},
+       {t:'Sell excess cargo to travel lighter.',c:'📦 −15, 💰 +20',b:['trader'],o:'tsc'},
+       {t:'Move on — no time to bargain.',c:'No change',b:[],o:'tp'}]},
+
+  {id:'t3',type:'travel',icon:'🏔️',tag:'tag-travel',title:'The High Passes of the Pamirs',
+   text:'The legendary Pamir mountains loom before you. The high road offers spectacular views — and lethal cold. The low road is murky swampland.',
+   skillBonus:{navigator:'Your navigator has crossed these mountains before.',scout:'Your scout can assess conditions before committing.',engineer:'Your engineer can build walkways over the boggy low route.'},
+   ch:[{t:'Take the high road through the passes.',c:'❄️ Cold risk',b:['navigator','scout'],o:'t3high'},
+       {t:'Take the low marshy route.',c:'🌾 −18 provisions',b:[],o:'t3low'},
+       {t:'Rest at the base and hire a guide.',c:'💰 −22 denarii',b:[],o:'t3guide'}]},
+
+  {id:'t4',type:'travel',icon:'🌉',tag:'tag-travel',title:'The Ancient Bridge',
+   text:'An ancient stone bridge spans the gorge ahead. It looks weathered — cracks run through the pillars. Your fully loaded wagons may be too heavy.',
+   skillBonus:{warrior:'Your warrior can organise a careful crossing.',navigator:'Your navigator knows if there is another crossing nearby.',engineer:'Your engineer can assess structural integrity and reinforce the bridge.'},
+   ch:[{t:'Cross slowly, one wagon at a time.',c:'⏳ Time and risk',b:['warrior'],o:'t4slow'},
+       {t:'Unload cargo and carry it across by hand.',c:'⏳ Very slow',b:[],o:'t4carry'},
+       {t:'Have the engineer assess and reinforce the bridge.',c:'⚙️ Safer crossing',b:['engineer'],o:'t4engineer'}]},
+
+  {id:'t5',type:'travel',icon:'🌠',tag:'tag-travel',title:'A Night in the Open Desert',
+   text:'Night has fallen suddenly. Your caravan is exposed in the open desert, and you can see campfires in the dunes — possibly bandits, possibly traders.',
+   skillBonus:{scout:'Your scout can determine who those fires belong to.',diplomat:'Your diplomat can approach any strangers safely.'},
+   ch:[{t:'Post guards and camp where you are.',c:'⚔️ Risk ambush',b:['warrior','scout'],o:'t5camp'},
+       {t:'Approach the other fires to investigate.',c:'🎲 Unknown',b:['scout','diplomat'],o:'t5approach'},
+       {t:'Push through the night to reach a town.',c:'🌾 −15 provisions',b:['navigator'],o:'t5push'}]},
+
+  {id:'t6',type:'travel',icon:'🌋',tag:'tag-travel',title:'Volcanic Ash Clouds',
+   text:'A distant mountain has erupted. Fine ash fills the air for three days, coating your provisions and making breathing painful.',
+   skillBonus:{healer:'Your healer can create cloth filters to help the caravan breathe.',engineer:'Your engineer knows how to seal wagons against the ash.'},
+   ch:[{t:'Press on through the ash fall.',c:'🌾 −10 provisions, 👥 risk',b:[],o:'t6press'},
+       {t:'Create makeshift filter masks for everyone.',c:'🌾 −5 provisions',b:['healer'],o:'t6masks'},
+       {t:'Seal the wagons and wait it out.',c:'💰 −15 denarii',b:['engineer'],o:'t6seal'}]},
+
+  {id:'t7',type:'travel',icon:'🐘',tag:'tag-travel',title:'Elephant Caravan Encounter',
+   text:'You encounter a magnificent Indian elephant caravan heading east. Their mahout offers to trade information about the road — his knowledge is invaluable.',
+   skillBonus:{trader:'Your trader can arrange a lucrative goods exchange.',scholar:'Your scholar can engage the mahout in a deep conversation about what lies ahead.'},
+   ch:[{t:'Trade Roman goods for road intelligence.',c:'📦 −8 cargo, +info',b:['trader'],o:'t7trade'},
+       {t:'Invite their scholar to share knowledge.',c:'🌾 −5 provisions',b:['scholar'],o:'t7scholar'},
+       {t:'Simply exchange pleasantries and move on.',c:'No change',b:[],o:'t7pass'}]},
+
+  {id:'t8',type:'travel',icon:'🌾',tag:'tag-travel',title:'Nomadic Tribe Crossing',
+   text:'A great nomadic tribe is migrating with their herds and blocks the road for miles. Waiting could take a week; negotiating might be faster.',
+   skillBonus:{diplomat:'Your diplomat speaks the nomadic tongue and can arrange passage.',navigator:'Your navigator knows a crossing point before the migration route.'},
+   ch:[{t:'Wait for the migration to pass.',c:'🌾 −20 provisions',b:[],o:'t8wait'},
+       {t:'Negotiate an immediate crossing gap.',c:'🎭 Diplomatic challenge',b:['diplomat'],o:'t8negotiate'},
+       {t:'Find the crossing point ahead of the migration.',c:'🌾 −12 provisions',b:['navigator'],o:'t8ford'}]},
+
+  // ── MARKET (7) ──
+  {id:'m1',type:'market',icon:'🏪',tag:'tag-market',title:'The Oasis Bazaar',
+   text:'You have arrived at a thriving oasis market. Merchants from Persia, India, and China ply their wares. A rare opportunity.',
+   skillBonus:{trader:'Your trader can negotiate prices well below market value.'},
+   ch:[{t:'Buy extra provisions for the road.',c:'💰 −25 denarii',b:['trader'],o:'mp'},
+       {t:'Trade Roman glassware for Eastern silk.',c:'📦 −5, 💰 +30',b:['trader'],o:'ms'},
+       {t:'Hire an extra guard for protection.',c:'💰 −20 denarii',b:[],o:'mh'}]},
+
+  {id:'m2',type:'market',icon:'💎',tag:'tag-market',title:'A Rare Opportunity',
+   text:'A merchant from India offers you an extraordinary deal — a crate of uncut gemstones for a fraction of their value. He claims he needs cash urgently.',
+   skillBonus:{trader:'Your trader can assess the gems\' authenticity.',scholar:'Your scholar recognizes the specific type of gems and knows their true value.'},
+   ch:[{t:'Buy the gems — extraordinary profit awaits.',c:'💰 −50 denarii upfront',b:['trader'],o:'m2gems'},
+       {t:'Trade half your silk for the gems.',c:'📦 −20 cargo',b:['trader'],o:'m2trade'},
+       {t:'Decline — too risky.',c:'No change',b:[],o:'m2decline'}]},
+
+  {id:'m3',type:'market',icon:'📜',tag:'tag-market',title:'The Silk Contracts',
+   text:'A Roman merchant who preceded you has left bulk purchase contracts for silk — but he has died en route and his estate offers them at a steep discount.',
+   skillBonus:{trader:'Your trader understands contract law and can negotiate.',diplomat:'Your diplomat can verify the legality of the contracts.',scholar:'Your scholar can read the contract in its original language.'},
+   ch:[{t:'Buy the contracts — enormous upside.',c:'💰 −45 denarii',b:['trader','diplomat'],o:'m3contracts'},
+       {t:'Purchase just one contract conservatively.',c:'💰 −20 denarii',b:['trader'],o:'m3one'},
+       {t:'Walk away — too complicated.',c:'No change',b:[],o:'m3pass'}]},
+
+  {id:'m4',type:'market',icon:'🍷',tag:'tag-market',title:'Roman Wine in the East',
+   text:'Your Roman wine amphorae have caused a sensation at this bazaar. Bidding has broken out. Do you sell now or hold for the Roman market?',
+   skillBonus:{trader:'Your trader knows the optimal moment to sell.'},
+   ch:[{t:'Sell everything here at the inflated price.',c:'📦 −20 cargo, 💰 +50',b:['trader'],o:'m4sell'},
+       {t:'Sell half and keep the rest for Rome.',c:'📦 −10 cargo, 💰 +25',b:[],o:'m4half'},
+       {t:'Hold — Rome will pay even more.',c:'No change',b:[],o:'m4hold'}]},
+
+  {id:'m5',type:'market',icon:'🧭',tag:'tag-market',title:'The Map Merchant',
+   text:'A blind old cartographer is selling what he claims are the most accurate maps of the road ahead — routes used only by the Emperor\'s own couriers.',
+   skillBonus:{navigator:'Your navigator can immediately assess the maps\' value.',scholar:'Your scholar can verify the maps\' authenticity by comparing details.'},
+   ch:[{t:'Purchase the full map collection.',c:'💰 −30 denarii',b:['navigator','scholar'],o:'m5buy'},
+       {t:'Buy just the segment you need next.',c:'💰 −12 denarii',b:['navigator'],o:'m5partial'},
+       {t:'Copy what you can by memory and move on.',c:'No change',b:['scholar'],o:'m5copy'}]},
+
+  {id:'m6',type:'market',icon:'🔮',tag:'tag-market',title:'Chinese Porcelain Windfall',
+   text:'A desperate Chinese merchant offers you his entire stock of exquisite blue-and-white porcelain — it will be priceless in Rome, but it\'s heavy and fragile.',
+   skillBonus:{trader:'Your trader knows the Rome porcelain market intimately.',engineer:'Your engineer can construct protective crating for the fragile pieces.'},
+   ch:[{t:'Buy everything — Rome will pay a fortune.',c:'💰 −60 denarii, 📦 +25',b:['trader','engineer'],o:'m6buy'},
+       {t:'Buy a carefully selected half-load.',c:'💰 −30 denarii, 📦 +12',b:['trader'],o:'m6half'},
+       {t:'Decline — too heavy and fragile.',c:'No change',b:[],o:'m6decline'}]},
+
+  {id:'m7',type:'market',icon:'⚗️',tag:'tag-market',title:'The Alchemist\'s Wares',
+   text:'A Sogdian alchemist offers strange substances he claims are miraculous medicines — worth a fortune to Roman physicians. The science is uncertain.',
+   skillBonus:{healer:'Your healer can assess whether these substances are genuinely valuable.',scholar:'Your scholar recognises some of the ingredients as legitimately rare.'},
+   ch:[{t:'Purchase the full lot on good faith.',c:'💰 −40 denarii',b:['healer','scholar'],o:'m7buy'},
+       {t:'Trade provisions for a small sample.',c:'🌾 −10 provisions',b:['healer'],o:'m7sample'},
+       {t:'Decline the strange wares.',c:'No change',b:[],o:'m7decline'}]},
+
+  // ── CULTURAL (10) ──
+  {id:'c1',type:'cultural',icon:'🎎',tag:'tag-cultural',title:'A Festival Invitation',
+   text:'You arrive in a city during its annual spring festival. The host family invites your entire caravan to participate in the celebration.',
+   skillBonus:{diplomat:'Your diplomat\'s cultural knowledge ensures you make the best impression.'},
+   ch:[{t:'Join fully — eat, drink, celebrate.',c:'🌾 −10 provisions',b:['diplomat'],o:'c1join'},
+       {t:'Politely observe from the periphery.',c:'No change',b:[],o:'c1observe'},
+       {t:'Use the festival crowd to sell cargo.',c:'📦 −8 cargo, 💰 +20',b:['trader'],o:'c1sell'}]},
+
+  {id:'c2',type:'cultural',icon:'📚',tag:'tag-cultural',title:'The Scholar\'s Request',
+   text:'A learned Persian scholar asks to join your caravan to Ctesiphon in exchange for his remarkable geographical knowledge of the roads ahead.',
+   skillBonus:{navigator:'Your navigator can immediately use the geographical data.',diplomat:'Your diplomat can broker a more valuable exchange.',scholar:'Your scholar immediately connects with him and gets extra knowledge.'},
+   ch:[{t:'Welcome the scholar aboard.',c:'🌾 −5 provisions',b:['navigator','diplomat','scholar'],o:'c2welcome'},
+       {t:'Accept him but charge for passage.',c:'💰 +10 denarii',b:['trader'],o:'c2charge'},
+       {t:'Politely decline the extra burden.',c:'No change',b:[],o:'c2decline'}]},
+
+  {id:'c3',type:'cultural',icon:'🏺',tag:'tag-cultural',title:'The Sacred Relic',
+   text:'A monk approaches your caravan with a small bronze statue — a sacred relic he needs transported to a temple in Antioch. He promises a reward.',
+   skillBonus:{diplomat:'Your diplomat can negotiate the reward upfront.',scholar:'Your scholar knows the relic is genuinely valuable and can verify the monk\'s legitimacy.'},
+   ch:[{t:'Accept — carry the relic to Antioch.',c:'📦 Minor weight',b:['diplomat'],o:'c3accept'},
+       {t:'Accept but negotiate the reward first.',c:'💰 Guarantee payment',b:['diplomat','trader'],o:'c3negotiate'},
+       {t:'Decline — too many complications.',c:'No change',b:[],o:'c3decline'}]},
+
+  {id:'c4',type:'cultural',icon:'🌺',tag:'tag-cultural',title:'The Garden City',
+   text:'You pass through a legendary garden city whose ruler welcomes trading caravans. However, he insists all visitors rest for three days.',
+   skillBonus:{trader:'Your trader can use the rest period for lucrative city trade.',diplomat:'Your diplomat can negotiate a shorter compulsory stay.'},
+   ch:[{t:'Rest three days and enjoy the hospitality.',c:'🌾 −15 provisions',b:['trader'],o:'c4rest'},
+       {t:'Negotiate to stay just one day.',c:'🎭 Diplomatic challenge',b:['diplomat'],o:'c4negotiate'},
+       {t:'Sneak out at dawn on the second night.',c:'⚠️ Risk offending the ruler',b:['scout'],o:'c4sneak'}]},
+
+  {id:'c5',type:'cultural',icon:'🔮',tag:'tag-cultural',title:'The Oracle of the Desert',
+   text:'Locals say a desert oracle lives two days off the road. She supposedly knows of threats ahead and charges whatever you can afford.',
+   skillBonus:{navigator:'Your navigator calculates the detour costs precisely.',diplomat:'Your diplomat believes the oracle has real intelligence value.'},
+   ch:[{t:'Visit the oracle.',c:'💰 −15 denarii, ⏳ time',b:['diplomat'],o:'c5visit'},
+       {t:'Send one merchant to visit alone.',c:'👥 Minor risk',b:['scout'],o:'c5send'},
+       {t:'Ignore superstition and march on.',c:'No change',b:[],o:'c5ignore'}]},
+
+  {id:'c6',type:'cultural',icon:'🎵',tag:'tag-cultural',title:'The Silk Road Musician',
+   text:'A celebrated musician from Samarkand attaches himself to your caravan. His playing lifts morale enormously — but he slows you down.',
+   skillBonus:{diplomat:'Your diplomat knows how to encourage the musician while keeping pace.',trader:'Your trader sees opportunity: the musician\'s performances attract business.'},
+   ch:[{t:'Welcome him gladly — morale matters.',c:'🌾 −8 provisions (slower)',b:['diplomat'],o:'c6welcome'},
+       {t:'Let him perform only at campsites.',c:'No change',b:[],o:'c6camp'},
+       {t:'Turn his performances into a revenue event.',c:'💰 +18 denarii',b:['trader'],o:'c6perform'}]},
+
+  {id:'c7',type:'cultural',icon:'🌙',tag:'tag-cultural',title:'The Ramadan Feast',
+   text:'Your caravan arrives at a Sogdian city during a great religious feast. The city is celebrating and all caravansaries are full and free — but roads are closed.',
+   skillBonus:{diplomat:'Your diplomat can navigate the cultural celebrations respectfully.',scholar:'Your scholar speaks the local dialect and can arrange accommodation quickly.'},
+   ch:[{t:'Participate fully in the feast and rest.',c:'🌾 −10 provisions (gained hospitality)',b:['scholar'],o:'c7feast'},
+       {t:'Camp outside the city and rest freely.',c:'🌾 −5 provisions',b:[],o:'c7camp'},
+       {t:'Find a way through the closed roads.',c:'💰 −15 denarii',b:['navigator','diplomat'],o:'c7through'}]},
+
+  {id:'c8',type:'cultural',icon:'📿',tag:'tag-cultural',title:'The Merchant Prince\'s Court',
+   text:'The legendary Merchant Prince of Samarkand summons your caravan to his court. He collects Roman curiosities and may offer extraordinary prices.',
+   skillBonus:{trader:'Your trader knows exactly which items the Prince covets.',diplomat:'Your diplomat can navigate court politics to get the best deal.',scholar:'Your scholar can discuss Roman history, delighting the Prince.'},
+   ch:[{t:'Bring your finest goods to court and negotiate.',c:'📦 −15 cargo, 💰 +60',b:['trader','diplomat'],o:'c8court'},
+       {t:'Display everything — hope for an offer.',c:'📦 −20 cargo, 💰 +40',b:['scholar'],o:'c8display'},
+       {t:'Decline — you cannot afford to lose cargo.',c:'No change',b:[],o:'c8decline'}]},
+
+  {id:'c9',type:'cultural',icon:'🏛️',tag:'tag-cultural',title:'Greek Philosophers in Antioch',
+   text:'A circle of Greek philosophers in Antioch has heard of your travels through the Orient. They invite you to a symposium and ask to purchase your Eastern scrolls.',
+   skillBonus:{scholar:'Your scholar can engage them meaningfully and negotiate a premium price.',diplomat:'Your diplomat knows which philosophers are actually wealthy patrons.'},
+   ch:[{t:'Attend and sell your scrolls and documents.',c:'📦 −10 cargo, 💰 +35',b:['scholar','diplomat'],o:'c9attend'},
+       {t:'Attend without selling — enjoy the exchange.',c:'🌾 −5 provisions',b:['scholar'],o:'c9attend_free'},
+       {t:'Skip — you have a schedule to keep.',c:'No change',b:[],o:'c9skip'}]},
+
+  {id:'c10',type:'cultural',icon:'⛵',tag:'tag-cultural',title:'The Phoenician Captain',
+   text:'A Phoenician sea captain offers to carry your cargo by sea from Antioch to Ostia — Rome\'s port. It is faster but the sea is dangerous this season.',
+   skillBonus:{navigator:'Your navigator knows the sea-lanes and can assess the risk.',trader:'Your trader can negotiate the passage fee.'},
+   ch:[{t:'Book the sea passage — it\'s much faster.',c:'💰 −40 denarii',b:['navigator','trader'],o:'c10sea'},
+       {t:'Go by land through Greece — safer but longer.',c:'🌾 −20 provisions',b:['navigator'],o:'c10land'},
+       {t:'Split the caravan — send cargo by sea, travel by land.',c:'💰 −20 denarii, 🌾 −10',b:['trader'],o:'c10split'}]},
+];
+
+// ═══════ OUTCOMES ═══════
+const OTS={
+  // ── Battle ──
+  bf:{txt:'Your guards fought bravely. After a fierce skirmish the bandits fled — but one merchant was wounded.',efx:[{l:'Bandits repelled',g:1},{l:'−1 merchant',g:0}],fn:G=>{if(G.m>1)G.m--}},
+  bf_w:{txt:'Your warrior led a devastating counter-charge. The bandits scattered without a single casualty on your side.',efx:[{l:'Warrior bonus!',g:1},{l:'No casualties',g:1}],fn:G=>{}},
+  bp:{txt:'You paid the tribute. Your coin pouch is lighter but your caravan is intact.',efx:[{l:'Caravan safe',g:1},{l:'−25 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-25)}},
+  bfl:{txt:'A desperate gallop across rocky terrain! You escaped, but provisions scattered from the wagons.',efx:[{l:'Escaped!',g:1},{l:'−10 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  bfl_boost:{txt:'Your experienced scout led the caravan through a back trail the bandits never knew existed. You lost nothing.',efx:[{l:'Scout bonus!',g:1},{l:'Clean escape',g:1}],fn:G=>{}},
+  bd:{txt:'The defensive circle held. The raiders eventually gave up. The delay cost provisions.',efx:[{l:'No casualties',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  bd_w:{txt:'Your warrior organised a textbook defensive formation. The raiders were repulsed with minimal losses.',efx:[{l:'Warrior bonus!',g:1},{l:'−10 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  bs:{txt:'You offered fine silk, and the nomad chief\'s eyes lit up. He escorted you safely through his territory.',efx:[{l:'Safe passage',g:1},{l:'−15 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-15)}},
+  bs_t:{txt:'Your trader struck a deal so clever that the raiders ended up trading back provisions in exchange for a few silk bolts.',efx:[{l:'Trader bonus!',g:1},{l:'−8 cargo, +10 provisions',g:1}],fn:G=>{G.c=Math.max(0,G.c-8);G.f+=10}},
+  bn:{txt:'Your silver tongue prevailed. The raiders agreed to trade goods instead of violence.',efx:[{l:'Peaceful resolution',g:1},{l:'+10 denarii',g:1}],fn:G=>{G.g+=10}},
+  b3fight:{txt:'The pass was held after a brutal fight. You lost one merchant but the mercenaries were routed.',efx:[{l:'Pass secured',g:1},{l:'−1 merchant',g:0}],fn:G=>{if(G.m>1)G.m--}},
+  b3fight_w:{txt:'Your warrior\'s tactics were flawless. The mercenaries broke and ran, and every merchant survived.',efx:[{l:'Warrior bonus!',g:1},{l:'All survived',g:1}],fn:G=>{}},
+  b3buy:{txt:'The mercenaries took your coin and stood aside, laughing. An expensive humiliation, but everyone lived.',efx:[{l:'All safe',g:1},{l:'−35 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-35)}},
+  b3flee:{txt:'You retreated and found another route. It cost time and provisions but you avoided the fight.',efx:[{l:'Safely avoided',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  b3flee_boost:{txt:'Your navigator found a mountain shortcut that completely bypassed the mercenaries. No losses at all.',efx:[{l:'Navigator bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  b4duel:{txt:'The single combat was fierce. Victory came at a cost — the merchant is wounded. The legionaries stood aside.',efx:[{l:'Passage won',g:1},{l:'Merchant wounded',g:0}],fn:G=>{if(Math.random()<.35&&G.m>1)G.m--}},
+  b4duel_w:{txt:'Your warrior defeated the decurion decisively. The legionaries cheered, then stood aside. No toll paid.',efx:[{l:'Warrior bonus!',g:1},{l:'Free passage',g:1}],fn:G=>{}},
+  b4pay:{txt:'You paid the toll through gritted teeth. At least you kept moving.',efx:[{l:'Passage granted',g:1},{l:'−20 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-20)}},
+  b4legal:{txt:'You unrolled the Senate scroll bearing the eagle seal. The deserters blanched and stepped aside.',efx:[{l:'Diplomatic victory',g:1},{l:'No cost',g:1}],fn:G=>{G.g+=5}},
+  b5watch:{txt:'The night watches held off the wolves. Exhausting but effective.',efx:[{l:'Animals safe',g:1},{l:'−5 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-5)}},
+  b5watch_boost:{txt:'Your warrior and scout coordinated a perfect perimeter. The wolves fled without breaching camp.',efx:[{l:'Skill bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  b5fire:{txt:'The bonfires worked brilliantly. The wolves circled at a distance then disappeared into the mountains.',efx:[{l:'Wolves deterred',g:1},{l:'−8 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-8)}},
+  b5sacrifice:{txt:'The sacrifice worked. The wolves took the cargo and left. A small price for safety.',efx:[{l:'Caravan safe',g:1},{l:'−12 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-12)}},
+  b6pay:{txt:'You paid the full tax. The road ahead is clear and legally yours.',efx:[{l:'Legal passage',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  b6bribe:{txt:'A quiet word and a small purse did the trick. The official smiled and waved you through.',efx:[{l:'Bribed',g:1},{l:'−15 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-15)}},
+  b6bribe_t:{txt:'Your trader\'s charm reduced the bribe to almost nothing. A masterclass in negotiation.',efx:[{l:'Trader bonus!',g:1},{l:'−8 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-8)}},
+  b6dispute:{txt:'The challenge worked. Other merchants applauded. The blockade dissolved under public scrutiny.',efx:[{l:'Blockade removed',g:1},{l:'+5 denarii',g:1}],fn:G=>{G.g+=5}},
+  b7gift:{txt:'Your scholar chose the perfect ceremonial items. The shaman was moved and let you pass with blessings.',efx:[{l:'Scholar bonus!',g:1},{l:'−10 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-10)}},
+  b7stand:{txt:'You stood your ground boldly. The Xiongnu respected your courage and rode away. But it was a close thing.',efx:[{l:'Bluff called!',g:1},{l:'Tension resolved',g:0}],fn:G=>{if(Math.random()<.4&&G.m>1)G.m--}},
+  b7stand_w:{txt:'Your warrior squared up to their champion. The nomads cheered and escorted you as honoured guests.',efx:[{l:'Warrior bonus!',g:1},{l:'+10 provisions',g:1}],fn:G=>{G.f+=10}},
+  b7scatter:{txt:'The caravan scattered on your signal and reconvened beyond the patrol. Chaotic but effective.',efx:[{l:'Escaped!',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  b8fight:{txt:'Your guards fought ferociously from the ferry decks. The pirates retreated, cursing.',efx:[{l:'Pirates driven off',g:1},{l:'−10 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-10)}},
+  b8fight_w:{txt:'Your warrior leapt aboard the lead pirate boat and sent the crew swimming. A legendary defence.',efx:[{l:'Warrior bonus!',g:1},{l:'No cargo lost',g:1}],fn:G=>{G.g+=10}},
+  b8distract:{txt:'You threw bales into the river. The pirates dived for them and you escaped. Wasteful, but alive.',efx:[{l:'Escaped',g:1},{l:'−20 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-20)}},
+  b8bribe:{txt:'The pirate captain took your coin and nodded. He even offered to "protect" you for the rest of the crossing.',efx:[{l:'Bribed',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  b9charge:{txt:'You charged through at full speed. Two wagons tipped but you broke free with most of the cargo intact.',efx:[{l:'Forced through!',g:1},{l:'−15 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-15);if(Math.random()<.4&&G.m>1)G.m--}},
+  b9detour:{txt:'Your navigator\'s alternate path was rugged but safe. You arrived at the next waypoint with no losses.',efx:[{l:'Navigator bonus!',g:1},{l:'−22 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-22)}},
+  b9night:{txt:'Your scout led the caravan through the gorge in total darkness, step by careful step. You emerged undetected.',efx:[{l:'Scout bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  // ── Disease ──
+  dm:{txt:'The medicine worked. Color returned to the merchant\'s face within two days.',efx:[{l:'Merchant recovered',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  dm_healer:{txt:'Your healer worked through the night with local herbs. The merchant recovered fully.',efx:[{l:'Healer bonus!',g:1},{l:'Full recovery',g:1}],fn:G=>{}},
+  dq:{txt:'You isolated the sick and pushed forward. Most recovered — but one merchant succumbed to fever.',efx:[{l:'Journey continued',g:1},{l:'−1 merchant',g:0}],fn:G=>{if(G.m>1)G.m--}},
+  dd:{txt:'The water was foul. Two merchants suffered for a week but eventually recovered.',efx:[{l:'All survived',g:1},{l:'Caravan weakened',g:0}],fn:G=>{if(Math.random()<.4&&G.m>1)G.m--}},
+  dra:{txt:'Strict rationing was hard, but you found a clean spring two days east. No lives lost.',efx:[{l:'Found clean water',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  dra_boost:{txt:'Your navigator found a shortcut to a clean spring in half the time. Minimal provisions lost.',efx:[{l:'Navigator bonus!',g:1},{l:'−8 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-8)}},
+  dtw:{txt:'A wandering nomad sold you clean water at an eye-watering price. Expensive but effective.',efx:[{l:'Caravan healthy',g:1},{l:'−15 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-15)}},
+  d3discard:{txt:'You discarded the contaminated stores immediately. Wasteful but safe. Everyone stayed healthy.',efx:[{l:'No illness',g:1},{l:'−25 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-25)}},
+  d3salvage:{txt:'Your healer inspected every sack and salvaged most of the grain. Only a quarter was lost.',efx:[{l:'Healer bonus!',g:1},{l:'−10 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  d3salvage_risk:{txt:'You tried to salvage the grain. Most was usable — but two merchants fell ill from what you missed.',efx:[{l:'Partial success',g:0},{l:'−18 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-18);if(Math.random()<.3&&G.m>1)G.m--}},
+  d3buy:{txt:'Your trader found replacement provisions at surprisingly fair prices in the next town.',efx:[{l:'Provisions restocked',g:1},{l:'−20 denarii, +15 provisions',g:1}],fn:G=>{G.g=Math.max(0,G.g-20);G.f+=15}},
+  d4rest:{txt:'Resting through the midday heat was tedious but it saved lives. The weakest recovered.',efx:[{l:'All survived',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  d4push:{txt:'You pushed through. One merchant collapsed completely and could not be revived.',efx:[{l:'Made it',g:0},{l:'−1 merchant',g:0}],fn:G=>{if(G.m>1)G.m--}},
+  d4treat:{txt:'The healer\'s treatment was swift and effective. Within a day both collapsed merchants were walking again.',efx:[{l:'Healer bonus!',g:1},{l:'−15 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-15)}},
+  d5rush:{txt:'You rushed to the nearest settlement and found an apothecary. The merchant survived.',efx:[{l:'Merchant saved',g:1},{l:'−10 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  d5antivenom:{txt:'Your healer applied the antivenom remedy without hesitation. The merchant was on his feet by evening.',efx:[{l:'Healer bonus!',g:1},{l:'Full recovery',g:1}],fn:G=>{}},
+  d5folk:{txt:'The folk remedy was dubious but somehow it worked. The merchant survived, though weakened.',efx:[{l:'Lucky survival',g:1},{l:'Merchant weakened',g:0}],fn:G=>{if(Math.random()<.45&&G.m>1)G.m--}},
+  d6discard:{txt:'You discarded all suspect provisions. The smell lingered in camp but everyone stayed healthy.',efx:[{l:'No illness',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  d6inspect:{txt:'Your healer went sack by sack. Over half was salvageable. A meticulous but worthwhile effort.',efx:[{l:'Healer bonus!',g:1},{l:'−8 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-8)}},
+  d6push:{txt:'You rationed severely and pressed on. Two merchants fell ill briefly but recovered by the next town.',efx:[{l:'Survived',g:1},{l:'−10 provisions, minor illness',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  d7pass:{txt:'You passed through quickly. Luck was with you — no one fell ill, though the risk was real.',efx:[{l:'Survived unscathed',g:1},{l:'Fortune favoured',g:1}],fn:G=>{if(Math.random()<.3&&G.m>1)G.m--}},
+  d7single:{txt:'The single envoy returned quickly with provisions and no illness. A sensible solution.',efx:[{l:'Resupplied safely',g:1},{l:'Minor risk',g:0}],fn:G=>{G.f+=10}},
+  d7detour:{txt:'The long route cost two weeks, but your caravan arrived at the next waypoint healthy and intact.',efx:[{l:'No illness',g:1},{l:'−18 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-18)}},
+  d8treat:{txt:'Your healer worked quickly on the stings. Within hours, the merchants were uncomfortable but functional.',efx:[{l:'Healer bonus!',g:1},{l:'Minor discomfort only',g:0}],fn:G=>{}},
+  d8rest:{txt:'Two days of rest was enough. Everyone recovered, and the caravan set out refreshed.',efx:[{l:'Full recovery',g:1},{l:'−12 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-12)}},
+  d8race:{txt:'The doctor in the oasis town treated everyone efficiently. Expensive, but effective.',efx:[{l:'Cured',g:1},{l:'−18 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-18)}},
+  // ── Weather ──
+  wg:{txt:'The Bedouin guide led you through a narrow canyon as the storm raged above. You emerged unscathed.',efx:[{l:'Survived storm',g:1},{l:'−20 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-20)}},
+  wg_n:{txt:'Your navigator and the guide worked together to find an even shorter canyon path. You lost nothing.',efx:[{l:'Navigator bonus!',g:1},{l:'Minimal cost',g:1}],fn:G=>{G.g=Math.max(0,G.g-10)}},
+  wp:{txt:'The covered wagons weathered the storm, but fine sand worked into two bales of silk.',efx:[{l:'Storm survived',g:1},{l:'−10 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-10)}},
+  ww:{txt:'Three days of waiting cost provisions, but you departed into clear skies.',efx:[{l:'Storm passed',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  wb:{txt:'The attempt was heroic but foolhardy. A merchant fell into a crevasse. He survived, barely.',efx:[{l:'Pass crossed',g:1},{l:'−1 merchant risk',g:0}],fn:G=>{if(Math.random()<.4&&G.m>1)G.m--}},
+  wb_boost:{txt:'Your scout tested every foothold and your warrior carried the heaviest loads. The pass was crossed safely.',efx:[{l:'Skill bonus!',g:1},{l:'All safe',g:1}],fn:G=>{}},
+  wl:{txt:'The southern route was long and muddy, but safer. Provisions ran low but no one was hurt.',efx:[{l:'Safe passage',g:1},{l:'−25 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-25)}},
+  wn:{txt:'You wintered comfortably in a village. The delay cost money but everyone rested well.',efx:[{l:'Rested',g:1},{l:'−35 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-35)}},
+  w3cross:{txt:'The roped crossing was terrifying but most cargo made it. One bale of silk was swept away.',efx:[{l:'Crossed!',g:1},{l:'−10 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-10)}},
+  w3cross_w:{txt:'Your warrior organised ropes and pulleys with expert precision. Every wagon crossed without a drop lost.',efx:[{l:'Warrior bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  w3cross_e:{txt:'Your engineer built a clever rope pulley system that brought everything across dry and intact.',efx:[{l:'Engineer bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  w3ford:{txt:'The ford upstream was deeper than expected, but navigable. A two-day delay but no cargo lost.',efx:[{l:'Safe ford',g:1},{l:'−18 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-18)}},
+  w3ferry:{txt:'The ferrymen were expensive but professional. Every wagon crossed without incident.',efx:[{l:'Safe crossing',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  w4fight:{txt:'The fire was contained after a desperate struggle. Two bales of silk were lost but the wagons survived.',efx:[{l:'Fire contained',g:1},{l:'−12 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-12)}},
+  w4fight_w:{txt:'Your warrior rallied the crew and had the fire out in minutes. Only a small amount of cargo was singed.',efx:[{l:'Warrior bonus!',g:1},{l:'−5 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-5)}},
+  w4fight_e:{txt:'Your engineer controlled the fire with textbook precision using dampened cloth barriers. Minimal damage.',efx:[{l:'Engineer bonus!',g:1},{l:'−3 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-3)}},
+  w4animals:{txt:'You let the wagons burn and saved all the animals. The cargo loss hurt, but you could still march.',efx:[{l:'Animals saved',g:1},{l:'−20 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-20)}},
+  w4animals_s:{txt:'Your scout tracked down every last scattered animal in the dark. You saved both the animals and most cargo.',efx:[{l:'Scout bonus!',g:1},{l:'−8 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-8)}},
+  w4abandon:{txt:'You grabbed what you could and fled. A painful loss, but everyone survived.',efx:[{l:'All alive',g:1},{l:'−30 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-30)}},
+  w5wait:{txt:'The fog lifted after half a day. You were only slightly off course and corrected easily.',efx:[{l:'Back on track',g:1},{l:'−12 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-12)}},
+  w5nav:{txt:'Your navigator read the stars through a break in the fog and found the road. No provisions wasted.',efx:[{l:'Navigator bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  w5tracks:{txt:'Animal tracks led to a road, which led to the next waypoint. Your scout saved the day.',efx:[{l:'Scout bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  w6push:{txt:'You fought the gale step by step. Three days of agony, but you emerged the other side battered and alive.',efx:[{l:'Made it through',g:1},{l:'−18 prov, −10 cargo',g:0}],fn:G=>{G.f=Math.max(0,G.f-18);G.c=Math.max(0,G.c-10)}},
+  w6wait:{txt:'Your navigator was right — the winds shifted on the second day and you resumed with no losses.',efx:[{l:'Navigator bonus!',g:1},{l:'−14 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-14)}},
+  w6fortify:{txt:'Your engineer lashed everything down with rope and timber. The caravan moved slowly but without losses.',efx:[{l:'Engineer bonus!',g:1},{l:'−10 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-10)}},
+  w7press:{txt:'The mud claimed two bales, but the wagons ground through. Everyone emerged exhausted but alive.',efx:[{l:'Pressed through',g:1},{l:'−15 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-15)}},
+  w7corduroy:{txt:'Your engineer\'s timber road was rough but effective. The wagons rolled across without losing a single item.',efx:[{l:'Engineer bonus!',g:1},{l:'−12 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-12)}},
+  w7ridge:{txt:'The ridge path was spectacular if exhausting. The cargo arrived dry and intact.',efx:[{l:'Navigator bonus!',g:1},{l:'−16 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-16)}},
+  w8race:{txt:'You raced across the scorching desert. Two merchants collapsed briefly but recovered at the next water source.',efx:[{l:'Made it',g:1},{l:'−1 merchant risk',g:0}],fn:G=>{if(Math.random()<.3&&G.m>1)G.m--}},
+  w8race_n:{txt:'Your navigator pushed you hard along the optimal route. You reached water with hours to spare.',efx:[{l:'Navigator bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  w8ration:{txt:'The healer\'s rationing plan was strict but brilliant. Everyone survived to the next water source.',efx:[{l:'Healer bonus!',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  w8dig:{txt:'Your engineer dug for six hours and struck a small underground spring. The caravan drank and refilled.',efx:[{l:'Engineer bonus!',g:1},{l:'+15 provisions',g:1}],fn:G=>{G.f+=15}},
+  // ── Political ──
+  pg:{txt:'You paid the corrupt official. The road ahead is clear and no one was harmed.',efx:[{l:'Clear passage',g:1},{l:'−40 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-40)}},
+  pr:{txt:'You invoked Roman diplomatic rights. The official backed down — but barely. A tense moment.',efx:[{l:'Diplomatic victory',g:1},{l:'No cost',g:1}],fn:G=>{if(Math.random()<.3)G.g=Math.max(0,G.g-20)}},
+  pr_d:{txt:'Your diplomat invoked Rome\'s treaty rights flawlessly. The official paled and waved you through.',efx:[{l:'Diplomat bonus!',g:1},{l:'Free passage',g:1}],fn:G=>{}},
+  pn:{txt:'You negotiated the tax down substantially. The official accepted a smaller sum with good grace.',efx:[{l:'Negotiated',g:1},{l:'−20 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-20)}},
+  pn_t:{txt:'Your trader reduced the bribe to a token amount. The official was charmed by the negotiation itself.',efx:[{l:'Trader bonus!',g:1},{l:'−8 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-8)}},
+  pa:{txt:'The Sogdian alliance brought strength in numbers. Extra guards and provisions joined your caravan.',efx:[{l:'+20 cargo value',g:1},{l:'+12 provisions',g:1}],fn:G=>{G.c+=20;G.f+=12}},
+  pd2:{txt:'Your combined negotiation skills landed a deal: shared guards, shared provisions, and a cash bonus.',efx:[{l:'Skill bonus!',g:1},{l:'+15 denarii',g:1}],fn:G=>{G.g+=15;G.f+=8}},
+  pd:{txt:'You declined the alliance. A week later you heard the Sogdian caravan was robbed. Perhaps wise.',efx:[{l:'Stayed independent',g:1},{l:'No change',g:1}],fn:G=>{}},
+  kf:{txt:'The feast was magnificent. The Khan was so delighted by your gifts he provided guards for the next leg.',efx:[{l:'Khan\'s favour',g:1},{l:'−8 cargo, +protection',g:1}],fn:G=>{G.c=Math.max(0,G.c-8)}},
+  kf_d:{txt:'Your diplomat navigated court beautifully. The Khan not only accepted the gifts — he sent you with his personal escort.',efx:[{l:'Diplomat bonus!',g:1},{l:'−8 cargo, free escort',g:1}],fn:G=>{G.c=Math.max(0,G.c-8);G.g+=15}},
+  ke:{txt:'You attended empty-handed. The Khan was offended. He sent you away, but without causing harm.',efx:[{l:'Offended Khan',g:0},{l:'No direct harm',g:0}],fn:G=>{if(Math.random()<.25&&G.m>1)G.m--}},
+  kv:{txt:'Your merchant envoy charmed the Khan\'s court. He returned with an invitation to trade at palace prices.',efx:[{l:'Diplomatic trade',g:1},{l:'+20 denarii',g:1}],fn:G=>{G.g+=20}},
+  p4docs:{txt:'Your Senate documentation was in order. The official apologised and waved you through.',efx:[{l:'Documentation valid',g:1},{l:'No cost',g:1}],fn:G=>{}},
+  p4docs_d:{txt:'Your diplomat cited not only the documents but three historical precedents. The official bowed deeply.',efx:[{l:'Diplomat bonus!',g:1},{l:'No cost, +respect',g:1}],fn:G=>{G.g+=8}},
+  p4docs_s:{txt:'Your scholar identified the exact treaty clause that applied. The official had no legal leg to stand on.',efx:[{l:'Scholar bonus!',g:1},{l:'Free passage',g:1}],fn:G=>{G.g+=5}},
+  p4bribe:{txt:'The bribe worked efficiently. The official pocketed the coin without meeting your eyes.',efx:[{l:'Bribed',g:1},{l:'−25 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-25)}},
+  p4bribe_t:{txt:'Your trader made the bribe look like a gift. The official ended up feeling flattered.',efx:[{l:'Trader bonus!',g:1},{l:'−12 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-12)}},
+  p4contest:{txt:'The public challenge worked. A senior magistrate overheard and intervened on your behalf.',efx:[{l:'Public vindication',g:1},{l:'+5 denarii reward',g:1}],fn:G=>{G.g+=5;if(Math.random()<.25&&G.m>1)G.m--}},
+  p5negotiate:{txt:'Your diplomat managed to get written safe-passage agreements from both warring parties. A masterpiece.',efx:[{l:'Safe passage!',g:1},{l:'−12 denarii cost',g:0}],fn:G=>{G.g=Math.max(0,G.g-12)}},
+  p5negotiate_risk:{txt:'The negotiations broke down mid-road. You ran through the battle lines losing cargo in the chaos.',efx:[{l:'Made it through',g:1},{l:'−20 cargo',g:0}],fn:G=>{G.c=Math.max(0,G.c-20)}},
+  p5mountains:{txt:'The mountain route was brutal but peaceful. You arrived late but unharassed.',efx:[{l:'Safe detour',g:1},{l:'−22 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-22)}},
+  p5mountains_n:{txt:'Your navigator found a shortcut through the mountains that halved the time.',efx:[{l:'Navigator bonus!',g:1},{l:'−12 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-12)}},
+  p5tribute:{txt:'You paid tribute to the dominant faction. They gave you a sealed letter of passage that worked perfectly.',efx:[{l:'Tribute paid',g:1},{l:'−30 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-30)}},
+  p6buy:{txt:'The forged documents worked at three checkpoints. At the fourth, a sharp-eyed official looked twice — but let you through.',efx:[{l:'Documents worked',g:1},{l:'−15 denarii, risky',g:0}],fn:G=>{G.g=Math.max(0,G.g-15);if(Math.random()<.3)G.c=Math.max(0,G.c-15)}},
+  p6check:{txt:'Your scholar spotted two errors in the documents. Good thing — the next checkpoint was especially thorough.',efx:[{l:'Scholar bonus!',g:1},{l:'Avoided disaster',g:1}],fn:G=>{}},
+  p6report:{txt:'You reported the forger to the local magistrate. He rewarded you with a letter of safe passage worth far more.',efx:[{l:'Diplomat bonus!',g:1},{l:'+10 denarii + safe passage',g:1}],fn:G=>{G.g+=10}},
+  p7siege:{txt:'The besieging army\'s camp market was surprisingly well-stocked. You resupplied cheaply while armies clashed in the distance.',efx:[{l:'Resupplied',g:1},{l:'−10 denarii, +12 provisions',g:1}],fn:G=>{G.g=Math.max(0,G.g-10);G.f+=12}},
+  p7wait:{txt:'You waited outside the walls for four days. The siege ended and you rode in as liberators.',efx:[{l:'Wait resolved',g:1},{l:'−20 provisions, +goodwill',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  p7sneak:{txt:'Crossing the siege lines in darkness was nightmarish but your scout and engineer found a way through.',efx:[{l:'Skill bonus!',g:1},{l:'No losses',g:1}],fn:G=>{}},
+  p8invoke:{txt:'Your diplomat cited the relevant Han imperial law. The general checked with his scribe and found it was indeed valid.',efx:[{l:'Skill bonus!',g:1},{l:'Guards retained',g:1}],fn:G=>{}},
+  p8donate:{txt:'A generous donation to the general\'s campaign fund. He released your guards and gave you a military escort.',efx:[{l:'Negotiated',g:1},{l:'−35 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-35);G.f+=10}},
+  p8comply:{txt:'You complied. Without guards, the caravan was vulnerable — but you made it through with only minor losses.',efx:[{l:'Complied',g:0},{l:'−15 cargo (unprotected)',g:0}],fn:G=>{G.c=Math.max(0,G.c-15)}},
+  // ── Travel ──
+  tn:{txt:'The northern route was contested, but you passed through in tense silence. No attack came.',efx:[{l:'Passed safely',g:1},{l:'Luck held',g:0}],fn:G=>{if(Math.random()<.3){G.c=Math.max(0,G.c-10)}}},
+  tn_s:{txt:'Your scout scouted ahead and found the road completely clear. The northern route saved two days.',efx:[{l:'Scout bonus!',g:1},{l:'+time saved',g:1}],fn:G=>{G.g+=8}},
+  ts:{txt:'The southern road was peaceful and fertile. Local farmers sold you provisions at fair prices.',efx:[{l:'Peaceful journey',g:1},{l:'−10 provisions, +goodwill',g:0}],fn:G=>{G.f=Math.max(0,G.f-10+8)}},
+  ts_n:{txt:'Your navigator knew exactly where the fertile farms were. You resupplied and saved five days.',efx:[{l:'Navigator bonus!',g:1},{l:'Efficient route',g:1}],fn:G=>{G.f+=10}},
+  ta:{txt:'The shepherd\'s advice was sound. He pointed you to a hidden road that avoided the worst of both routes.',efx:[{l:'Local knowledge',g:1},{l:'−5 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-5);G.f+=5}},
+  tc:{txt:'Two magnificent Bactrian camels joined your caravan. Your cargo capacity increased substantially.',efx:[{l:'+20 cargo capacity',g:1},{l:'−40 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-40);G.c+=20}},
+  tc_t:{txt:'Your trader haggled masterfully. The camels cost half price and came with a month\'s feed.',efx:[{l:'Trader bonus!',g:1},{l:'−20 denarii, +20 cargo, +provisions',g:1}],fn:G=>{G.g=Math.max(0,G.g-20);G.c+=20;G.f+=10}},
+  tsc:{txt:'You traded excess cargo for coin. The caravan moved lighter and faster.',efx:[{l:'Lightened load',g:1},{l:'−15 cargo, +20 denarii',g:0}],fn:G=>{G.c=Math.max(0,G.c-15);G.g+=20}},
+  tsc_t:{txt:'Your trader got exceptional prices. A minor cargo reduction turned into a major profit.',efx:[{l:'Trader bonus!',g:1},{l:'−10 cargo, +30 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-10);G.g+=30}},
+  tp:{txt:'You moved on without stopping. Three days later you wished you had bought those camels.',efx:[{l:'Kept moving',g:1},{l:'No change',g:0}],fn:G=>{}},
+  t3high:{txt:'The high pass was brutal but exhilarating. Three days of freezing altitude, but the views were eternal.',efx:[{l:'Crossed!',g:1},{l:'−8 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-8);if(Math.random()<.3&&G.m>1)G.m--}},
+  t3high_boost:{txt:'Your navigator and scout worked in perfect tandem. The pass was crossed without a single casualty.',efx:[{l:'Skill bonus!',g:1},{l:'Safely crossed',g:1}],fn:G=>{}},
+  t3low:{txt:'The low swamp route was miserable — muddy, slow, and disease-prone. But you made it through.',efx:[{l:'Through the swamp',g:1},{l:'−18 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-18);if(Math.random()<.2&&G.m>1)G.m--}},
+  t3guide:{txt:'The mountain guide knew every hidden path. You crossed in half the normal time.',efx:[{l:'Guide hired',g:1},{l:'−22 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-22);G.f+=5}},
+  t4slow:{txt:'The careful crossing worked. Each wagon made it across, though the last one scraped the sides.',efx:[{l:'Crossed safely',g:1},{l:'Minor damage',g:0}],fn:G=>{if(Math.random()<.2)G.c=Math.max(0,G.c-8)}},
+  t4slow_w:{txt:'Your warrior organised the crossing with military precision. Every wagon cleared the bridge cleanly.',efx:[{l:'Warrior bonus!',g:1},{l:'No damage',g:1}],fn:G=>{}},
+  t4carry:{txt:'Carrying everything by hand was exhausting. It took two days but everything crossed intact.',efx:[{l:'All cargo safe',g:1},{l:'Exhausting effort',g:0}],fn:G=>{G.f=Math.max(0,G.f-10)}},
+  t4engineer:{txt:'Your engineer inspected the bridge and shored up the weakest points with timber. A masterwork of improvisation.',efx:[{l:'Engineer bonus!',g:1},{l:'Bridge reinforced',g:1}],fn:G=>{}},
+  t5camp:{txt:'The guards kept watch all night. The other fires turned out to be sheep herders — no threat.',efx:[{l:'Safe camp',g:1},{l:'Quiet night',g:0}],fn:G=>{}},
+  t5camp_boost:{txt:'Your warrior and scout ran a textbook perimeter. The mysterious fires moved away during the night.',efx:[{l:'Skill bonus!',g:1},{l:'No threat',g:1}],fn:G=>{}},
+  t5approach:{txt:'The other fires were friendly Sogdian traders. You shared food and got invaluable road intelligence.',efx:[{l:'New allies!',g:1},{l:'+12 provisions',g:1}],fn:G=>{G.f+=12}},
+  t5push:{txt:'Pushing through the night was exhausting but you reached a caravanserai by dawn.',efx:[{l:'Arrived safely',g:1},{l:'−15 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-15)}},
+  t6press:{txt:'The ash fall was miserable. Two merchants fell ill briefly but the caravan pressed through.',efx:[{l:'Made it',g:1},{l:'−10 prov, minor illness',g:0}],fn:G=>{G.f=Math.max(0,G.f-10);if(Math.random()<.25&&G.m>1)G.m--}},
+  t6masks:{txt:'Your healer\'s cloth filters made breathing possible. The caravan walked through the ash in relative comfort.',efx:[{l:'Healer bonus!',g:1},{l:'−5 provisions only',g:0}],fn:G=>{G.f=Math.max(0,G.f-5)}},
+  t6seal:{txt:'Your engineer sealed the wagons tightly. When you emerged three days later, the cargo was pristine.',efx:[{l:'Engineer bonus!',g:1},{l:'−15 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-15)}},
+  t7trade:{txt:'The mahout traded Eastern spice knowledge for your Roman metalwork. A good exchange.',efx:[{l:'Information traded',g:1},{l:'−8 cargo, +road knowledge',g:1}],fn:G=>{G.c=Math.max(0,G.c-8);G.f+=8}},
+  t7scholar:{txt:'The scholarly exchange lasted a full day. Your scholar returned with detailed notes on the next three waypoints.',efx:[{l:'Scholar bonus!',g:1},{l:'+road intelligence',g:1}],fn:G=>{G.f+=5;G.g+=10}},
+  t7pass:{txt:'You shared a meal and moved on. Simple pleasures on a long road.',efx:[{l:'Pleasant encounter',g:1},{l:'No change',g:0}],fn:G=>{G.f+=5}},
+  t8wait:{txt:'You waited five days for the migration to clear. The delay cost provisions but the road was then yours.',efx:[{l:'Road cleared',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  t8negotiate:{txt:'Your diplomat found the tribe\'s elder and negotiated a gap in the herds. You passed through in two hours.',efx:[{l:'Diplomat bonus!',g:1},{l:'−5 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-5)}},
+  t8ford:{txt:'Your navigator found the exact ford ahead of the migration. You crossed before the herds arrived.',efx:[{l:'Navigator bonus!',g:1},{l:'−12 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-12)}},
+  // ── Market ──
+  mp:{txt:'You resupplied generously. Your provisions are now well-stocked for the hard road ahead.',efx:[{l:'Resupplied',g:1},{l:'−25 denarii, +30 provisions',g:1}],fn:G=>{G.g=Math.max(0,G.g-25);G.f+=30}},
+  mp_t:{txt:'Your trader found a bulk discount. You restocked provisions for almost half the usual price.',efx:[{l:'Trader bonus!',g:1},{l:'−12 denarii, +30 provisions',g:1}],fn:G=>{G.g=Math.max(0,G.g-12);G.f+=30}},
+  ms:{txt:'Roman glassware for Eastern silk — a classic Silk Road trade. Both sides were satisfied.',efx:[{l:'Trade complete',g:1},{l:'−5 cargo, +30 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-5);G.g+=30}},
+  ms_t:{txt:'Your trader negotiated the exchange rate upward. The silk you received was worth double what you gave.',efx:[{l:'Trader bonus!',g:1},{l:'−3 cargo, +40 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-3);G.g+=40}},
+  mh:{txt:'An experienced guard joined your caravan for the next leg. His knowledge of the road proved valuable.',efx:[{l:'Guard hired',g:1},{l:'−20 denarii, +protection',g:1}],fn:G=>{G.g=Math.max(0,G.g-20)}},
+  m2gems:{txt:'The gems were genuine. Your scholar was right — they are worth five times what you paid.',efx:[{l:'Gems acquired!',g:1},{l:'−50 denarii, +35 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-50);G.c+=35}},
+  m2gems_risk:{txt:'Half the gems turned out to be glass imitations. A costly lesson in caution.',efx:[{l:'Partial fraud',g:0},{l:'−50 denarii, +15 cargo',g:0}],fn:G=>{G.g=Math.max(0,G.g-50);G.c+=15}},
+  m2trade:{txt:'The silk-for-gems trade was well-received in every subsequent market you visited.',efx:[{l:'Trade complete',g:1},{l:'−20 cargo, +20 cargo',g:0}],fn:G=>{G.c+=5}},
+  m2decline:{txt:'You declined. A week later you heard the merchant had been arrested for fraud. A lucky escape.',efx:[{l:'Wise caution',g:1},{l:'No change',g:0}],fn:G=>{}},
+  m3contracts:{txt:'The contracts were valid. When you reach Chang\'an, the silk will await you at far below market price.',efx:[{l:'Contracts secured!',g:1},{l:'−45 denarii, +40 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-45);G.c+=40}},
+  m3one:{txt:'One contract was modest but sound. A small but reliable gain.',efx:[{l:'Contract secured',g:1},{l:'−20 denarii, +15 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-20);G.c+=15}},
+  m3pass:{txt:'You walked away. Two weeks later you heard the contracts had been contested in court.',efx:[{l:'Wisely avoided',g:1},{l:'No change',g:0}],fn:G=>{}},
+  m4sell:{txt:'The Romans in this city were desperate for wine. You sold every amphora at three times the Roman price.',efx:[{l:'Premium sale!',g:1},{l:'−20 cargo, +50 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-20);G.g+=50}},
+  m4sell_t:{txt:'Your trader created a bidding war. The final price was five times Roman market value.',efx:[{l:'Trader bonus!',g:1},{l:'−20 cargo, +70 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-20);G.g+=70}},
+  m4half:{txt:'You sold half the wine at premium prices and kept the best for Rome.',efx:[{l:'Balanced decision',g:1},{l:'−10 cargo, +25 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-10);G.g+=25}},
+  m4hold:{txt:'You held your wine. Three waypoints later, a Roman consul bought the entire stock at an extraordinary price.',efx:[{l:'Patience rewarded',g:1},{l:'+40 denarii (later)',g:1}],fn:G=>{G.g+=40}},
+  m5buy:{txt:'The maps were extraordinary — Imperial courier routes known to no other traveller. You saved days.',efx:[{l:'Skill bonus!',g:1},{l:'−30 denarii, +route advantage',g:1}],fn:G=>{G.g=Math.max(0,G.g-30);G.f+=8}},
+  m5partial:{txt:'The partial map covered your next two legs perfectly. A good investment.',efx:[{l:'Navigator bonus!',g:1},{l:'−12 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-12);G.f+=5}},
+  m5copy:{txt:'Your scholar copied the key sections by memory with surprising accuracy. No coin spent.',efx:[{l:'Scholar bonus!',g:1},{l:'Free knowledge',g:1}],fn:G=>{G.f+=3}},
+  m6buy:{txt:'The porcelain survived the journey immaculately packed. In Rome it would sell for a fortune.',efx:[{l:'Skill bonus!',g:1},{l:'−60 denarii, +25 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-60);G.c+=25}},
+  m6half:{txt:'The half-load of porcelain was carefully chosen — the finest pieces. All survived the road.',efx:[{l:'Good selection',g:1},{l:'−30 denarii, +12 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-30);G.c+=12}},
+  m6decline:{txt:'You passed on the porcelain. Your wagon space was better used for easier cargo.',efx:[{l:'Practical decision',g:1},{l:'No change',g:0}],fn:G=>{}},
+  m7buy:{txt:'The alchemist\'s substances turned out to include genuine mithridate and rare Persian salves. A real find.',efx:[{l:'Skill bonus!',g:1},{l:'−40 denarii, +20 cargo',g:1}],fn:G=>{G.g=Math.max(0,G.g-40);G.c+=20}},
+  m7sample:{txt:'The sample proved genuine. Your healer confirmed three of the substances had real medical value.',efx:[{l:'Healer bonus!',g:1},{l:'−10 provisions, +8 cargo',g:1}],fn:G=>{G.f=Math.max(0,G.f-10);G.c+=8}},
+  m7decline:{txt:'You declined the strange wares. Wise caution — another merchant who bought them found them worthless.',efx:[{l:'Wise caution',g:1},{l:'No change',g:0}],fn:G=>{}},
+  // ── Cultural ──
+  c1join:{txt:'You feasted with the locals. A city elder, delighted by your Roman tales, gifted you provisions for the road.',efx:[{l:'Diplomat bonus!',g:1},{l:'−10 prov, +18 prov gift',g:1}],fn:G=>{G.f+=8}},
+  c1observe:{txt:'You watched from a respectful distance. The festival was beautiful, and you rested well.',efx:[{l:'Rested',g:1},{l:'No change',g:0}],fn:G=>{}},
+  c1sell:{txt:'You set up a small market stall amid the festival crowd. Roman novelties sold for remarkable prices.',efx:[{l:'Trader bonus!',g:1},{l:'−8 cargo, +20 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-8);G.g+=20}},
+  c2welcome:{txt:'The scholar\'s geographical knowledge proved invaluable. He knew every water source and safe camp along the next three legs.',efx:[{l:'Skill bonus!',g:1},{l:'+15 provisions saved',g:1}],fn:G=>{G.f+=15}},
+  c2charge:{txt:'He paid for passage and shared his knowledge freely anyway. A gentlemanly arrangement.',efx:[{l:'Paid passage',g:1},{l:'+10 denarii, +8 provisions',g:1}],fn:G=>{G.g+=10;G.f+=8}},
+  c2decline:{txt:'You declined the extra burden. The road ahead was harder without his geographical knowledge.',efx:[{l:'Passed',g:1},{l:'No gain',g:0}],fn:G=>{}},
+  c3accept:{txt:'You carried the relic to Antioch. The temple monks greeted you with ceremony and generous payment.',efx:[{l:'Mission complete!',g:1},{l:'+20 denarii reward',g:1}],fn:G=>{G.g+=20}},
+  c3negotiate:{txt:'Your combined skills secured the payment upfront. The monks were delighted by your honesty.',efx:[{l:'Skill bonus!',g:1},{l:'+30 denarii',g:1}],fn:G=>{G.g+=30}},
+  c3decline:{txt:'You declined. The monk found another caravan. You wondered sometimes about the relic\'s fate.',efx:[{l:'Declined',g:1},{l:'No change',g:0}],fn:G=>{}},
+  c4rest:{txt:'Three days of rest and city trading. Your trader made deals that more than covered the provisions spent.',efx:[{l:'Trader bonus!',g:1},{l:'+25 denarii from trade',g:1}],fn:G=>{G.g+=25;G.f=Math.max(0,G.f-15)}},
+  c4negotiate:{txt:'Your diplomat negotiated a one-day stay. The ruler accepted graciously and gave you a fast-pass letter for his territory.',efx:[{l:'Diplomat bonus!',g:1},{l:'Stay shortened, +letter',g:1}],fn:G=>{}},
+  c4sneak:{txt:'Your scout got you out before dawn. The ruler was briefly furious but his territory ended two days later.',efx:[{l:'Scout bonus!',g:1},{l:'Minor political risk',g:0}],fn:G=>{if(Math.random()<.2)G.g=Math.max(0,G.g-10)}},
+  c5visit:{txt:'The oracle described a bandit ambush at the next river crossing. You prepared well and avoided it.',efx:[{l:'Diplomatic wisdom!',g:1},{l:'−15 denarii, saved losses',g:1}],fn:G=>{G.g=Math.max(0,G.g-15);G.c+=10}},
+  c5send:{txt:'Your scout visited alone. He returned with genuine intelligence about a blocked road ahead.',efx:[{l:'Scout bonus!',g:1},{l:'+navigation info',g:1}],fn:G=>{G.f+=8}},
+  c5ignore:{txt:'You marched on. Three days later you walked into the very ambush the oracle would have warned you about.',efx:[{l:'Ignored oracle',g:0},{l:'−15 cargo (ambush)',g:0}],fn:G=>{if(Math.random()<.5)G.c=Math.max(0,G.c-15)}},
+  c6welcome:{txt:'The musician\'s playing lifted everyone\'s spirits. The caravan moved slower but morale was extraordinary.',efx:[{l:'Morale boost!',g:1},{l:'−8 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-8);G.c+=5}},
+  c6camp:{txt:'Evening performances became the highlight of each day. Good compromise.',efx:[{l:'Pleasant journey',g:1},{l:'No change',g:0}],fn:G=>{}},
+  c6perform:{txt:'Your trader organised paid performances at caravanserais. The musician earned his keep ten times over.',efx:[{l:'Trader bonus!',g:1},{l:'+18 denarii',g:1}],fn:G=>{G.g+=18}},
+  c7feast:{txt:'Your scholar made the caravan welcome guests. You feasted, rested, and departed with gifts and goodwill.',efx:[{l:'Scholar bonus!',g:1},{l:'Resupplied + rested',g:1}],fn:G=>{G.f+=15;G.g+=8}},
+  c7camp:{txt:'You camped outside and rested peacefully. A quiet night under the stars.',efx:[{l:'Rested',g:1},{l:'−5 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-5)}},
+  c7through:{txt:'Your diplomat found a minor official willing to let you through the "closed" road for a small fee.',efx:[{l:'Skill bonus!',g:1},{l:'−15 denarii',g:0}],fn:G=>{G.g=Math.max(0,G.g-15)}},
+  c8court:{txt:'Your trader and diplomat performed brilliantly at court. The Prince paid extraordinary prices for Roman goods.',efx:[{l:'Skill bonus!',g:1},{l:'−15 cargo, +60 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-15);G.g+=60}},
+  c8display:{txt:'Your scholar\'s conversation delighted the Prince. He bought everything on display at generous prices.',efx:[{l:'Scholar bonus!',g:1},{l:'−20 cargo, +40 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-20);G.g+=40}},
+  c8decline:{txt:'You declined the invitation. The Prince was mildly offended but sent no trouble your way.',efx:[{l:'Declined',g:1},{l:'No change',g:0}],fn:G=>{}},
+  c9attend:{txt:'The philosophers were wealthy patrons. Your Eastern scrolls and documents sold for extraordinary prices.',efx:[{l:'Skill bonus!',g:1},{l:'−10 cargo, +35 denarii',g:1}],fn:G=>{G.c=Math.max(0,G.c-10);G.g+=35}},
+  c9attend_free:{txt:'The symposium was intellectually thrilling. Your scholar returned inspired and with knowledge of a secret shortcut.',efx:[{l:'Scholar bonus!',g:1},{l:'+road knowledge',g:1}],fn:G=>{G.f+=10}},
+  c9skip:{txt:'You skipped the symposium. Perhaps a missed opportunity — but time is also money.',efx:[{l:'Kept moving',g:1},{l:'No change',g:0}],fn:G=>{}},
+  c10sea:{txt:'The sea passage was quick and the captain was skilled. You arrived at Ostia in two weeks.',efx:[{l:'Navigator+Trader bonus!',g:1},{l:'−40 denarii, saved 2 weeks',g:1}],fn:G=>{G.g=Math.max(0,G.g-40);G.c+=10}},
+  c10land:{txt:'The road through Greece was beautiful and safe. You arrived in Rome with your cargo perfectly intact.',efx:[{l:'Navigator bonus!',g:1},{l:'−20 provisions',g:0}],fn:G=>{G.f=Math.max(0,G.f-20)}},
+  c10split:{txt:'The split was sensible. The sea cargo arrived first; your party followed by land. All reunited at Ostia.',efx:[{l:'Combined approach',g:1},{l:'−20 denarii, −10 provisions',g:0}],fn:G=>{G.g=Math.max(0,G.g-20);G.f=Math.max(0,G.f-10);G.c+=5}},
+};
+
+// ═══════ CHAR SETUP ═══════
+const CHAR_DEFAULTS=[
+  {name:'Marcus',  placeholder:'Roman Name',  avatar:'🧔'},
+  {name:'Lydia',   placeholder:'Roman Name',  avatar:'👩'},
+  {name:'Aulus',   placeholder:'Roman Name',  avatar:'🧑'},
+];
+
+function showSetup(){
+  const grid=document.getElementById('chars-grid'); grid.innerHTML='';
+  CHAR_DEFAULTS.forEach((ch,i)=>{
+    const skillOpts=Object.entries(SKILLS).map(([key,sk])=>`
+      <label class="skill-opt" id="so_${i}_${key}">
+        <input type="checkbox" value="${key}">
+        <span class="skill-icon">${sk.icon}</span>
+        <div><div class="skill-name">${sk.name}</div><div class="skill-desc-s">${sk.desc}</div></div>
+      </label>`).join('');
+    grid.innerHTML+=`
+    <div class="char-card">
+      <div class="char-card-header">
+        <div class="char-avatar">${ch.avatar}</div>
+        <input class="char-name-inp" id="ci_${i}" placeholder="${ch.placeholder}" maxlength="14" value="${ch.name}">
+      </div>
+      <div class="skill-label">Choose 2 Skills</div>
+      <div class="skills-grid">${skillOpts}</div>
+      <div class="skill-limit" id="sl_${i}">0 / 2 selected</div>
+    </div>`;
+  });
+  
+  // Add click handlers to each skill option after DOM is built
+  Object.entries(SKILLS).forEach(([key,sk])=>{
+    for(let i=0;i<3;i++){
+      const el=document.getElementById(`so_${i}_${key}`);
+      if(el){
+        el.addEventListener('click',function(e){
+          e.preventDefault();
+          toggleSkill(i,key,this);
+        });
+      }
+    }
+  });
+  
+  document.getElementById('screen-title').classList.add('hidden');
+  document.getElementById('screen-setup').classList.remove('hidden');
+}
+
+const charSkills=[[],[],[]];
+function toggleSkill(ci,key,el){
+  const arr=charSkills[ci];
+  const idx=arr.indexOf(key);
+  if(idx>-1){
+    arr.splice(idx,1);
+    el.classList.remove('active');
+  } else if(arr.length<2){
+    arr.push(key);
+    el.classList.add('active');
+  }
+  document.getElementById('sl_'+ci).textContent=`${arr.length} / 2 selected`;
+}
+
+// ═══════ STATE ═══════
+let S={};
+
+function startGame(){
+  const names=CHAR_DEFAULTS.map((_,i)=>document.getElementById('ci_'+i).value.trim()||CHAR_DEFAULTS[i].name);
+  S={
+    m:3, f:80, g:120, c:60,
+    day:1, wpIdx:0, evDone:0, evPerLeg:3,
+    names, avatars:['🧔','👩','🧑'],
+    skills:charSkills.map(a=>[...a]),
+    alive:[true,true,true],
+    used:new Set(),
+    typePool:[],
+    startGold:120, startCargo:60,
+    maxCargo:60, peakCargo:60,
+  };
+  charSkills.forEach((_,i)=>charSkills[i]=[]);
+  const setup=document.getElementById('screen-setup');
+  setup.classList.add('hidden');
+  const game=document.getElementById('screen-game');
+  game.classList.remove('hidden');
+  buildTrack(); updateHUD(); buildPartyDisplay(); showEv();
+}
+
+function resetGame(){
+  charSkills[0]=[]; charSkills[1]=[]; charSkills[2]=[];
+  document.getElementById('screen-go').style.display='none';
+  document.getElementById('screen-win').style.display='none';
+  document.getElementById('screen-title').classList.remove('hidden');
+}
+
+// ═══════ HELPERS ═══════
+const $=id=>document.getElementById(id);
+function show(id){const e=$(id);if(e){e.classList.remove('hidden');e.style.display=''}}
+function hide(id){const e=$(id);if(e){e.classList.add('hidden');e.style.display='none'}}
+function setT(id,v){const e=$(id);if(e)e.textContent=v}
+
+// ═══════ PARTY DISPLAY ═══════
+function buildPartyDisplay(){
+  const div=$('party-display');div.innerHTML='';
+  S.names.forEach((nm,i)=>{
+    const skills=S.skills[i].map(k=>`<span class="pm-skill">${SKILLS[k].icon} ${SKILLS[k].name}</span>`).join('');
+    div.innerHTML+=`<div class="party-member${S.alive[i]?'':' dead'}" id="pm_${i}"><div class="pm-avatar">${S.avatars[i]}</div><div><div class="pm-name">${nm}</div><div class="pm-skills">${skills||'<span class="pm-skill">No skills</span>'}</div></div></div>`;
+  });
+}
+
+// ═══════ WAYPOINT TRACK ═══════
+function buildTrack(){
+  const t=$('prog-track');t.innerHTML='';
+  WP.forEach((wp,i)=>{
+    if(i>0){const l=document.createElement('div');l.className='wp-line';l.id='wl'+i;t.appendChild(l)}
+    const w=document.createElement('div');w.className='wp';
+    w.innerHTML=`<div class="wp-dot${i===0?' done':''}" id="wd${i}">${wp.icon}</div><div class="wp-name">${wp.name}</div>`;
+    t.appendChild(w);
+  });
+  updTrack();
+}
+function updTrack(){
+  WP.forEach((_,i)=>{
+    const d=$('wd'+i),l=$('wl'+i);
+    if(!d)return;
+    d.className='wp-dot';
+    if(i<S.wpIdx){d.classList.add('done');if(l)l.classList.add('done')}
+    else if(i===S.wpIdx)d.classList.add('cur');
+    if(l&&i<=S.wpIdx)l.classList.add('done');
+  });
+  // Update region badge
+  const rb=$('region-badge');
+  if(rb&&WP[S.wpIdx])rb.textContent=WP[S.wpIdx].region;
+}
+
+// ═══════ HUD ═══════
+function updateHUD(){
+  setT('hud-m',S.m);setT('hud-f',S.f);setT('hud-g',S.g);setT('hud-c',S.c);
+  const bar=(id,pct,col)=>{const e=$(id);if(!e)return;e.style.width=Math.max(0,Math.min(100,pct))+'%';e.style.background=col};
+  bar('bar-m',(S.m/3)*100,'#e57373');
+  bar('bar-f',(S.f/100)*100,S.f<25?'#e57373':S.f<50?'#ff9500':'#80c878');
+  bar('bar-g',(S.g/200)*100,S.g<30?'#e57373':'#c9a84c');
+  bar('bar-c',(S.c/120)*100,'#7ab8d4');
+  setT('stage-day','Day '+S.day);
+  if(S.c>S.peakCargo)S.peakCargo=S.c;
+}
+
+// ═══════ STAGE ANIMATIONS (Enhanced) ═══════
+function animateStage(type,icon,label){
+  const cfg=STAGE_CFG[type]||STAGE_CFG.travel;
+  const bg=$('stage-bg');
+  bg.style.background=cfg.bg;
+
+  // Animated overlays
+  const overlay=$('stage-overlay');
+  overlay.innerHTML='';
+  buildSceneOverlay(type,overlay);
+
+  // Icon pop
+  const iconEl=$('stage-icon');
+  iconEl.style.animation='none';void iconEl.offsetWidth;
+  iconEl.textContent=icon;
+  iconEl.style.animation='stagePop .5s cubic-bezier(.34,1.56,.64,1) both';
+
+  setT('stage-type-lbl',label.toUpperCase());
+  spawnParticles(cfg.particle,type);
+}
+
+function buildSceneOverlay(type,container){
+  const el=document.createElement('div');
+  el.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden';
+
+  if(type==='battle'){
+    // Crossed swords silhouettes
+    el.innerHTML=`
+      <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(0deg,rgba(80,0,0,.6),transparent)"></div>
+      <div style="position:absolute;bottom:15px;left:15%;font-size:28px;opacity:.3;transform:rotate(-30deg);animation:swayL 3s ease-in-out infinite">⚔️</div>
+      <div style="position:absolute;bottom:10px;right:20%;font-size:22px;opacity:.25;transform:rotate(20deg);animation:swayR 4s ease-in-out infinite">🗡️</div>
+    `;
+  } else if(type==='weather'){
+    // Clouds and lightning
+    el.innerHTML=`
+      <div style="position:absolute;top:10px;left:-5%;font-size:36px;opacity:.2;animation:cloudDrift 6s linear infinite">☁️</div>
+      <div style="position:absolute;top:5px;left:30%;font-size:28px;opacity:.15;animation:cloudDrift 8s linear infinite 2s">🌩️</div>
+      <div style="position:absolute;top:12px;right:-5%;font-size:32px;opacity:.18;animation:cloudDrift 5s linear infinite 1s">🌧️</div>
+    `;
+  } else if(type==='travel'){
+    // Caravan silhouettes
+    el.innerHTML=`
+      <div style="position:absolute;bottom:8px;font-size:22px;opacity:.3;animation:caravanDrift 8s linear infinite">🐪🐪</div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:20px;background:linear-gradient(0deg,rgba(100,70,0,.4),transparent)"></div>
+    `;
+  } else if(type==='market'){
+    // Coin sparkles
+    el.innerHTML=`
+      <div style="position:absolute;bottom:5px;left:8%;font-size:18px;opacity:.3;animation:bob 2s ease-in-out infinite">💰</div>
+      <div style="position:absolute;bottom:8px;right:12%;font-size:16px;opacity:.25;animation:bob 3s ease-in-out infinite 1s">⚱️</div>
+      <div style="position:absolute;top:8px;right:8%;font-size:14px;opacity:.2;animation:bob 2.5s ease-in-out infinite .5s">✨</div>
+    `;
+  } else if(type==='disease'){
+    // Miasma swirls
+    el.innerHTML=`
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(80,100,0,.15),transparent 70%)"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(60,80,0,.1),transparent 60%)"></div>
+    `;
+  } else if(type==='political'){
+    // Scroll/column silhouettes
+    el.innerHTML=`
+      <div style="position:absolute;bottom:0;left:8%;width:12px;height:60px;background:rgba(180,150,100,.15);border-radius:3px 3px 0 0"></div>
+      <div style="position:absolute;bottom:0;left:15%;width:10px;height:45px;background:rgba(180,150,100,.1);border-radius:3px 3px 0 0"></div>
+      <div style="position:absolute;bottom:0;right:10%;width:12px;height:55px;background:rgba(180,150,100,.12);border-radius:3px 3px 0 0"></div>
+      <div style="position:absolute;top:10px;right:15%;font-size:22px;opacity:.2;animation:bob 4s ease-in-out infinite">📜</div>
+    `;
+  } else if(type==='cultural'){
+    // Lanterns
+    el.innerHTML=`
+      <div style="position:absolute;top:5px;left:10%;font-size:20px;opacity:.3;animation:swayL 3s ease-in-out infinite">🏮</div>
+      <div style="position:absolute;top:8px;right:15%;font-size:18px;opacity:.25;animation:swayR 4s ease-in-out infinite">🏮</div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:25px;background:linear-gradient(0deg,rgba(0,30,80,.4),transparent)"></div>
+    `;
+  }
+  container.appendChild(el);
+
+  // Inject keyframes once
+  if(!document.getElementById('scene-kf')){
+    const s=document.createElement('style');s.id='scene-kf';
+    s.textContent=`
+      @keyframes swayL{0%,100%{transform:rotate(-30deg) translateX(0)}50%{transform:rotate(-20deg) translateX(5px)}}
+      @keyframes swayR{0%,100%{transform:rotate(20deg) translateX(0)}50%{transform:rotate(30deg) translateX(-5px)}}
+      @keyframes cloudDrift{0%{transform:translateX(0)}100%{transform:translateX(110vw)}}
+      @keyframes caravanDrift{0%{left:-10%}100%{left:110%}}
+      @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    `;
+    document.head.appendChild(s);
+  }
+}
+
+function spawnParticles(ptype,type){
+  const cont=$('stage-particles');cont.innerHTML='';
+  const colors={
+    fire:['#ff6500','#ff9500','#ffcc00','#ff3300'],
+    smoke:['#5a5a3a','#7a7a5a','#3a3a2a','#909060'],
+    wind:['#7ab8d4','#a0d0e8','#4a8fa8','#c0e8ff'],
+    sparkle:['#e8c97a','#c9a84c','#ffffff','#c07cc0'],
+    dust:['#c9a84c','#8b6914','#e8c97a','#a08040'],
+    glow:['#c07cc0','#9b59d0','#e8c97a','#7ab0e0'],
+  };
+  const cols=colors[ptype]||colors.dust;
+  const count={fire:35,smoke:22,wind:30,sparkle:25,dust:28,glow:20}[ptype]||25;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');p.className='particle';
+    const sz=Math.random()*9+2;
+    const x=Math.random()*100,startY=Math.random()*100;
+    const dur=(1+Math.random()*3).toFixed(1),del=(Math.random()*2.5).toFixed(1);
+    const col=cols[Math.floor(Math.random()*cols.length)];
+    const shape=ptype==='sparkle'||ptype==='glow'?'3px':'50%';
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${x}%;top:${startY}%;background:${col};opacity:0;animation:pf_${ptype} ${dur}s ${del}s ease-in-out infinite;border-radius:${shape}`;
+    cont.appendChild(p);
+  }
+  if(!document.getElementById('pf-kf-'+ptype)){
+    const style=document.createElement('style');style.id='pf-kf-'+ptype;
+    const kfName='pf_'+ptype;
+    const kfs={
+      fire:`@keyframes ${kfName}{0%{opacity:0;transform:translateY(0) scale(.5)}30%{opacity:.9}100%{opacity:0;transform:translateY(-90px) scale(.15)}}`,
+      smoke:`@keyframes ${kfName}{0%{opacity:0;transform:translateY(0) scale(.4)}40%{opacity:.5}100%{opacity:0;transform:translateY(-70px) translateX(25px) scale(2.5)}}`,
+      wind:`@keyframes ${kfName}{0%{opacity:0;transform:translateX(0) scaleX(.5)}50%{opacity:.75}100%{opacity:0;transform:translateX(130px) scaleX(4)}}`,
+      sparkle:`@keyframes ${kfName}{0%,100%{opacity:0;transform:scale(0) rotate(0)}50%{opacity:1;transform:scale(1) rotate(180deg)}}`,
+      dust:`@keyframes ${kfName}{0%{opacity:0;transform:translate(0,0)}50%{opacity:.65}100%{opacity:0;transform:translate(${Math.random()>0.5?'':'-'}50px,-35px)}}`,
+      glow:`@keyframes ${kfName}{0%,100%{opacity:0;transform:scale(0)}40%,60%{opacity:.8;transform:scale(1.2)}50%{opacity:1;transform:scale(1)}}`,
+    };
+    style.textContent=kfs[ptype]||kfs.dust;
+    document.head.appendChild(style);
+  }
+}
+
+// ═══════ SKILL HELPERS ═══════
+function partyHasSkill(skill){return S.skills.some((arr,i)=>S.alive[i]&&arr.includes(skill))}
+function getAllPartySkills(){const all=new Set();S.skills.forEach((arr,i)=>{if(S.alive[i])arr.forEach(s=>all.add(s))});return all}
+
+// ═══════ PICK EVENT (ensures variety, no repeats per playthrough) ═══════
+// With 58 unique events and only 24 needed per playthrough (8 legs × 3 events),
+// we guarantee zero repeats in any single game!
+function pickEv(){
+  // Get events not yet used
+  const available=EVS.filter(e=>!S.used.has(e.id));
+  
+  // If we've exhausted all events (highly unlikely with 58 events and 3 per leg × 8 legs = 24 total)
+  if(available.length===0){
+    S.used.clear();
+    return EVS[Math.floor(Math.random()*EVS.length)];
+  }
+
+  // Track what types we've seen in the last few events to avoid clustering
+  if(!S.recentTypes)S.recentTypes=[];
+  
+  // Prefer events whose type we haven't seen in the last 3 events
+  const diverse=available.filter(e=>!S.recentTypes.includes(e.type));
+  const pool=diverse.length>0?diverse:available;
+  
+  // Pick randomly from the diverse pool
+  const ev=pool[Math.floor(Math.random()*pool.length)];
+  
+  // Mark as used (no repeats for entire playthrough)
+  S.used.add(ev.id);
+  
+  // Track recent types (keep last 3)
+  S.recentTypes.push(ev.type);
+  if(S.recentTypes.length>3)S.recentTypes.shift();
+  
+  return ev;
+}
+
+// ═══════ SHOW EVENT ═══════
+function showEv(){
+  if(S.evDone>0&&S.evDone%S.evPerLeg===0){
+    S.wpIdx++;
+    if(S.wpIdx>=WP.length-1){winGame();return}
+    updTrack();
+    addLog(`⚑ Arrived at ${WP[S.wpIdx].name}`,true);
+    S.f=Math.max(0,S.f-10);
+    updateHUD();
+    if(checkDeath())return;
+  }
+
+  const ev=pickEv();S.curEv=ev;
+  const partySkills=getAllPartySkills();
+
+  animateStage(ev.type,ev.icon,ev.type);
+
+  const tagEl=$('ev-tag');tagEl.className='ev-tag '+ev.tag;
+  tagEl.textContent=ev.type.charAt(0).toUpperCase()+ev.type.slice(1);
+  setT('ev-title',ev.title);
+  setT('ev-text',ev.text);
+
+  const sbDiv=$('skill-bonus-display');sbDiv.innerHTML='';
+  if(ev.skillBonus){
+    Object.entries(ev.skillBonus).forEach(([sk,hint])=>{
+      if(partySkills.has(sk)){
+        sbDiv.innerHTML+=`<div class="skill-bonus">${SKILLS[sk].icon} <strong>${SKILLS[sk].name}:</strong> ${hint}</div>`;
+      }
+    });
+  }
+
+  const nc=$('narrative-card');nc.classList.remove('fade-in');void nc.offsetWidth;nc.classList.add('fade-in');
+
+  const cc=$('choices-con');cc.innerHTML='';
+  const L=['I','II','III'];
+  ev.ch.forEach((ch,i)=>{
+    const hasBenefit=ch.b&&ch.b.some(s=>partySkills.has(s));
+    const b=document.createElement('button');b.className='ch-btn'+(hasBenefit?' boosted':'');
+    const boostLine=hasBenefit?`<div class="ch-boost">${ch.b.filter(s=>partySkills.has(s)).map(s=>`${SKILLS[s].icon} ${SKILLS[s].name} skill active`).join(' · ')}</div>`:'';
+    b.innerHTML=`<span class="ch-letter">${L[i]}</span><div><div>${ch.t}</div><div class="ch-cost">${ch.c}</div>${boostLine}</div>`;
+    b.onclick=()=>resolve(ev,ch,i);
+    cc.appendChild(b);
+  });
+
+  $('outcome-sec').style.display='none';
+  hide('cont-sec');show('choices-sec');
+}
+
+// ═══════ RESOLVE CHOICE ═══════
+function resolve(ev,ch,ci){
+  const partySkills=getAllPartySkills();
+  const hasBenefit=ch.b&&ch.b.some(s=>partySkills.has(s));
+  let oKey=ch.o;
+
+  if(hasBenefit){
+    const activeSkills=ch.b.filter(s=>partySkills.has(s));
+    for(const sk of activeSkills){
+      // Try various boost key patterns
+      const tries=[
+        ch.o+'_'+sk.charAt(0),        // bf_w
+        ch.o+'_'+sk.substring(0,3),   // bf_war
+        ch.o+'_boost',                 // bf_boost
+        ch.o+'_'+sk,                   // bf_warrior
+      ];
+      for(const k of tries){if(OTS[k]){oKey=k;break}}
+      if(oKey!==ch.o)break;
+    }
+  }
+
+  // Special risk variants
+  if(ch.o==='m2gems'&&!partyHasSkill('trader')&&!partyHasSkill('scholar')&&Math.random()<.5) oKey='m2gems_risk';
+  if(ch.o==='d3salvage'&&!partyHasSkill('healer')) oKey='d3salvage_risk';
+  if(ch.o==='p5negotiate'&&!partyHasSkill('diplomat')) oKey='p5negotiate_risk';
+  if(ch.o==='w8race'&&partyHasSkill('navigator')) oKey='w8race_n';
+  if(ch.o==='wg'&&partyHasSkill('navigator')) oKey='wg_n';
+  if(ch.o==='w3cross'&&partyHasSkill('engineer')) oKey='w3cross_e';
+
+  const out=OTS[oKey]||OTS[ch.o];
+  if(!out){console.warn('Missing outcome:',oKey,'falling back to base');return}
+
+  out.fn(S);
+  S.evDone++;
+  S.day+=Math.floor(Math.random()*3)+2;
+  updateHUD();
+
+  hide('choices-sec');
+  $('outcome-sec').style.display='block';
+  const card=$('out-card');
+  const isBad=out.efx.some(e=>!e.g);
+  const isGood=out.efx.every(e=>e.g);
+  card.className='panel '+(isBad?'out-bad':isGood?'out-good':'out-neutral');
+  setT('out-text',out.txt);
+
+  const efDiv=$('out-efx');efDiv.innerHTML='';
+  (out.efx||[]).forEach(ef=>{
+    const s=document.createElement('span');
+    s.className='eff '+(ef.g?'eff-good':'eff-bad');s.textContent=ef.l;efDiv.appendChild(s);
+  });
+
+  if(isBad){['sb-m','sb-f','sb-g','sb-c'].forEach(id=>{const e=$(id);if(e){e.classList.add('pulse-bad');setTimeout(()=>e.classList.remove('pulse-bad'),700)}})}
+  else if(isGood){['sb-g','sb-c'].forEach(id=>{const e=$(id);if(e){e.classList.add('pulse-good');setTimeout(()=>e.classList.remove('pulse-good'),700)}})}
+
+  addLog(`Day ${S.day}: ${ev.title} → Choice ${['I','II','III'][ci]}`+(hasBenefit?' ✦':''),false);
+  if(checkDeath())return;
+  show('cont-sec');
+}
+
+function nextEvent(){hide('cont-sec');showEv()}
+
+// ═══════ DEATH CHECK ═══════
+function checkDeath(){
+  if(S.m<=0){gameOver('All your merchants have perished. The caravan was lost to the sands of time.');return true}
+  if(S.f<=0){gameOver('Your provisions ran out. The caravan starved in the unforgiving desert.');return true}
+  if(S.g<=0&&S.c<=0){gameOver('Bankrupt and stripped of all goods, your caravan could not continue.');return true}
+  return false;
+}
+
+// ═══════ GAME OVER ═══════
+function gameOver(reason){
+  hide('screen-game');
+  const go=$('screen-go');go.style.display='block';go.classList.add('screen');
+  setT('go-reason',reason);
+  setT('go-score',WP[S.wpIdx].km.toLocaleString());
+}
+
+// ═══════ WIN & SCORE (cargo-based, detailed) ═══════
+function winGame(){
+  hide('screen-game');
+  const win=$('screen-win');win.style.display='block';win.classList.add('screen');
+
+  const alive=S.names.filter((_,i)=>S.alive[i]);
+  setT('win-txt',`${alive.join(', ')} — your caravan has crossed the ancient world from Chang'an to Rome. The Senate shall hear of this triumph!`);
+
+  // ── SCORING BREAKDOWN ──
+  // Cargo is the primary score driver (represents what you brought home)
+  const cargoPct = Math.min(100, Math.round((S.c / S.startCargo) * 100));
+  const cargoRetained = S.c;
+  const cargoScore = cargoRetained * 5;    // 5 pts per unit of cargo
+  const goldScore = S.g;                   // 1 pt per denarius
+  const merchantBonus = S.m * 60;         // 60 pts per surviving merchant
+  const skillCount = S.skills.flat().filter(Boolean).length;
+  const skillBonus = skillCount * 15;      // 15 pts per skill used
+  const peakBonus = Math.max(0, S.peakCargo - S.startCargo) * 3; // bonus for growing cargo
+
+  const total = cargoScore + goldScore + merchantBonus + skillBonus + peakBonus;
+
+  let rating,rClass,rDesc;
+  if(total>=650){rating='LEGENDARY';rClass='rating-legendary';rDesc='A triumph for the ages. Rome has not seen such riches since the days of Caesar himself.'}
+  else if(total>=480){rating='HEROIC';rClass='rating-heroic';rDesc='A remarkable achievement. Poets and historians will record this journey for centuries.'}
+  else if(total>=320){rating='MERCHANT';rClass='rating-merchant';rDesc='A solid profit. The Senate is pleased and the trading houses are impressed.'}
+  else if(total>=170){rating='TRAVELER';rClass='rating-traveler';rDesc='You made it — bruised, lean, and considerably wiser for the experience.'}
+  else{rating='SURVIVOR';rClass='rating-survivor';rDesc='Barely alive, barely profitable. But you stand in Rome, and that is more than most can say.'}
+
+  const badge=$('win-rating-badge');
+  badge.className='rating-badge '+rClass;
+  badge.textContent=rating;
+  setT('win-score',total.toLocaleString());
+
+  // Score breakdown
+  const breakdown=$('score-breakdown');
+  breakdown.innerHTML=`
+    <div class="sb-row"><div class="sb-cat">Cargo Brought Home</div><div class="sb-val">${cargoScore}</div></div>
+    <div class="sb-row"><div class="sb-cat">Remaining Denarii</div><div class="sb-val">${goldScore}</div></div>
+    <div class="sb-row"><div class="sb-cat">Survivors (×60)</div><div class="sb-val">${merchantBonus}</div></div>
+    <div class="sb-row"><div class="sb-cat">Skills Used (×15)</div><div class="sb-val">${skillBonus}</div></div>
+    ${peakBonus>0?`<div class="sb-row"><div class="sb-cat">Trade Growth Bonus</div><div class="sb-val">${peakBonus}</div></div>`:''}
+    <div class="sb-row full"><div class="sb-cat">Cargo Retention Rate</div><div class="sb-val" style="color:${cargoPct>=80?'#80c878':cargoPct>=50?'var(--gold)':'#e57373'}">${cargoPct}% of original</div></div>
+  `;
+
+  // Cargo Manifest
+  buildCargoManifest(cargoRetained);
+}
+
+function buildCargoManifest(totalCargo){
+  const container=$('cargo-manifest');
+  if(!container||totalCargo<=0){if(container)container.style.display='none';return}
+  container.style.display='block';
+  container.innerHTML=`<div class="cargo-title">📦 &nbsp;Cargo Manifest — What You Brought to Rome</div>`;
+
+  // Distribute cargo across categories based on total
+  const types=Object.entries(CARGO_TYPES);
+  const portions=[];
+  let remaining=totalCargo;
+
+  // Allocate based on weighted values
+  types.forEach(([key,ct],i)=>{
+    const isLast=i===types.length-1;
+    const share=isLast?remaining:Math.max(0,Math.round((Math.random()*0.3+0.05)*totalCargo));
+    const actual=Math.min(share,remaining);
+    remaining-=actual;
+    if(actual>0)portions.push({key,ct,amount:actual});
+  });
+
+  // Sort by value descending
+  portions.sort((a,b)=>b.ct.value-a.ct.value);
+
+  portions.forEach(({ct,amount})=>{
+    const romValue=amount*ct.value;
+    const barPct=Math.min(100,Math.round((amount/totalCargo)*100));
+    container.innerHTML+=`
+      <div class="cargo-item">
+        <div class="cargo-item-icon">${ct.icon}</div>
+        <div class="cargo-item-info">
+          <div class="cargo-item-name">${ct.name}</div>
+          <div class="cargo-item-val">${amount} units · ${romValue} denarii in Rome</div>
+          <div class="cargo-bar"><div class="cargo-bar-fill" style="width:${barPct}%"></div></div>
+        </div>
+      </div>`;
+  });
+}
+
+// ═══════ LOG ═══════
+function addLog(text,milestone=false){
+  const body=$('log-body');
+  const el=document.createElement('div');
+  el.className='log-e'+(milestone?' milestone':'');
+  el.innerHTML=`<span class="log-day">${milestone?'⚑ ':''} Day ${S.day}</span> — ${text}`;
+  body.insertBefore(el,body.firstChild);
+}
+function toggleLog(){
+  const b=$('log-body'),a=$('log-arr');
+  if(b.style.display==='block'){b.style.display='none';a.textContent='▼'}
+  else{b.style.display='block';a.textContent='▲'}
+}
+</script>
+</body>
+</html>
