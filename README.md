@@ -1,165 +1,133 @@
-# 🎵 Song Recommendation App
+# 🚀 Interactive Projects Portfolio
 
-An interactive music discovery tool that recommends songs based on user-selected audio preferences such as energy, mood, tempo, and style.
+Welcome! This repository showcases a collection of interactive applications focused on **recommendation systems, strategy modeling, and educational simulation design**.
 
-This project was built to explore how recommendation systems work and to create an intuitive interface for discovering music based on *how it sounds* rather than just artist or genre.
-
----
-
-## 🚀 Features
-
-- 🎚️ Interactive sliders to adjust musical traits
-- 🎧 Real-time song recommendations
-- 💡 “Why these songs?” explanation popover
-- 🎨 Friendly, visual UI with icons and feedback
-- 🔍 Scalable design for future API integrations (Spotify or other music datasets)
+Each project explores decision-making systems through user interaction — whether discovering music, planning empire strategy, or navigating historical trade routes.
 
 ---
 
-## 🧠 How It Works
+## 📚 Table of Contents
 
-Users adjust sliders that represent audio characteristics (e.g., energy, tempo, mood).  
-The app compares those inputs to a dataset of songs and returns the closest matches.
-
-This is a simplified model of content-based recommendation systems used by streaming platforms.
-
----
-
-## 🛠️ Tech Stack
-
-- React
-- JavaScript / TypeScript
-- CSS / UI components
-- Local song dataset (expandable)
-- Designed for future API integration
+- [🎵 Song Recommendation App](#-song-recommendation-app)
+- [🧭 Civilization V Strategy Guide](#-civilization-v-strategy-guide)
+- [🐫 Silk Road Travel Game](#-silk-road-travel-game)
+- [🛠️ Technologies Used](#️-technologies-used)
+- [🧪 Local Development](#-local-development)
+- [🔮 Future Development](#-future-development)
+- [📸 Screenshots](#-screenshots)
+- [📄 License](#-license)
 
 ---
 
-## 📦 Installation
+## 🎵 Song Recommendation App
 
+An interactive music discovery tool that recommends songs based on audio preferences such as energy, tempo, and mood.
 
----
+Instead of browsing by artist or genre, users explore music based on *how it feels*.
 
-# 🧭 README — Civilization V Strategy Guide
+### ✨ Features
+- 🎚️ Interactive audio-trait sliders  
+- 🎧 Real-time song recommendations  
+- 💡 “Why these songs?” explanation feature  
+- 🎨 Friendly visual UI  
+- 🔌 Designed for scalable dataset integration  
 
-```markdown
-# 🧭 Civilization V Strategy Guide
+### 🧠 Concept
+This project demonstrates a simplified **content-based recommendation system** similar to what streaming platforms use: user inputs are matched against song characteristics to return close matches.
 
-An interactive strategy companion for Sid Meier’s Civilization V that helps players choose leaders, plan playstyles, and optimize decisions based on map type, victory goals, and civilization strengths.
+### 🎯 Learning Goals
+- Recommendation system fundamentals  
+- Front-end state management  
+- Interactive UI design  
+- API-ready architecture  
 
-Designed for both new and experienced players who want structured strategic guidance.
-
----
-
-## 🚀 Features
-
-- 👑 Leader recommendations based on playstyle
-- 🗺️ Map bias and terrain analysis
-- 🏆 Victory condition strategy guidance
-- 🏗️ Suggested wonders and build priorities
-- 📊 Strategic explanations for each recommendation
-
----
-
-## 🧠 How It Works
-
-Users input preferences such as:
-
-- Victory type (science, domination, culture, diplomacy)
-- Map type
-- Playstyle
-- Resource environment
-
-The app evaluates civilization bonuses and strategic synergies to recommend optimal leaders and strategies.
+### 🔗 Repo / Demo
+- Repo: `https://github.com/YOUR_USERNAME/song-recommendation-app`
+- Demo: `https://YOUR_DEMO_URL`
 
 ---
 
-## 🛠️ Tech Stack
+## 🧭 Civilization V Strategy Guide
 
-- React
-- JavaScript / TypeScript
-- Strategy rules engine
-- Custom Civilization V data model
+An interactive decision-support tool that helps players choose leaders, plan strategy, and optimize gameplay in *Sid Meier’s Civilization V*.
+
+Designed to translate complex game mechanics into structured strategic guidance.
+
+### ✨ Features
+- 👑 Leader recommendations by playstyle  
+- 🏆 Victory condition planning  
+- 🗺️ Map and terrain strategy  
+- 🏗️ Wonder prioritization guidance  
+- 🧾 Strategic reasoning explanations  
+
+### 🧠 Concept
+A **rule-based strategy system** evaluates synergies between:
+- civilization bonuses  
+- map conditions  
+- player goals  
+
+### 🎯 Learning Goals
+- Strategy modeling  
+- Decision support systems  
+- Complex rule engines  
+- Interactive educational tools  
+
+### 🔗 Repo / Demo
+- Repo: `https://github.com/YOUR_USERNAME/civ5-strategy-guide`
+- Demo: `https://YOUR_DEMO_URL`
 
 ---
 
-## 📦 Installation
+## 🐫 Silk Road Travel Game
+
+A narrative exploration and decision-making game where players journey along the historic Silk Road managing trade, survival, and cultural encounters.
+
+Inspired by real geography and historical trade networks.
+
+### ✨ Features
+- 🗺️ Interactive Eurasian trade routes  
+- 🎒 Resource management  
+- ⚖️ Trade and negotiation decisions  
+- 🌦️ Environmental travel risks  
+- 📜 Branching story outcomes  
+
+### 🧠 Educational Focus
+Players experience:
+- Historical trade networks  
+- Cultural exchange across regions  
+- Economic decision-making under uncertainty  
+- Geographic strategy  
+
+### 🎯 Learning Goals
+- Interactive storytelling  
+- Simulation design  
+- Historical modeling  
+- Event-driven systems  
+
+### 🔗 Repo / Demo
+- Repo: `https://github.com/YOUR_USERNAME/silk-road-game`
+- Demo: `https://YOUR_DEMO_URL`
+
+---
+
+## 🛠️ Technologies Used
+
+Across projects:
+- React  
+- JavaScript / TypeScript  
+- Component-based UI architecture  
+- Rule-based decision systems  
+- Interactive simulation logic  
+
+---
+
+## 🧪 Local Development
+
+> If you have the projects in separate repos, clone and run each one individually.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/civ5-strategy-guide.git
-cd civ5-strategy-guide
-npm install
-npm start
-
-```bash
+# Example
 git clone https://github.com/YOUR_USERNAME/song-recommendation-app.git
 cd song-recommendation-app
-npm install
-npm start
-
-
----
-
-# 🐫 README — Silk Road Travel Game
-
-```markdown
-# 🐫 Silk Road Travel Game
-
-A narrative exploration game where players journey along the historic Silk Road, making strategic decisions about trade, survival, diplomacy, and exploration.
-
-Inspired by real geography, historical trade routes, and cultural encounters.
-
----
-
-## 🌏 Overview
-
-Players travel across Eurasia managing:
-
-- Resources
-- Trade goods
-- Travel risks
-- Cultural interactions
-- Route decisions
-
-Each choice affects survival, wealth, and the outcome of the journey.
-
----
-
-## 🚀 Features
-
-- 🗺️ Interactive Silk Road map
-- 🎒 Resource management system
-- ⚖️ Trade and negotiation decisions
-- 🌦️ Environmental and travel challenges
-- 📜 Historically inspired events
-- 🧭 Branching story outcomes
-
----
-
-## 🧠 Educational Goals
-
-This game introduces players to:
-
-- Historical trade networks
-- Cultural exchange across regions
-- Geography of Eurasia
-- Economic decision-making under uncertainty
-
----
-
-## 🛠️ Tech Stack
-
-- React (or game framework if applicable)
-- JavaScript / TypeScript
-- Event-driven narrative engine
-- Resource management logic
-
----
-
-## 📦 Installation
-
-```bash
-git clone https://github.com/YOUR_USERNAME/silk-road-game.git
-cd silk-road-game
 npm install
 npm start
